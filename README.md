@@ -1,3 +1,6 @@
+# Apple_Pen
+[Proposal doc](https://github.com/deco3500-2019/Apple_Pen/wiki/Concept-Proposal)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
