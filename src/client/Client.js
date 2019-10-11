@@ -34,7 +34,7 @@ export default class Client extends Component {
 
 	handleSubmit = e => {
 		e.preventDefault();
-		axios.get("http://localhost:4000")
+		axios.post("/", {text: this.state.text})
 			.then(res => {this.setState({ response: res.data });})
 			.catch(err => console.log(err));
 	}
