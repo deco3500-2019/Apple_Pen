@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Route } from "react-router-dom";
 import axios from "axios";
 
-export default class Client extends Component {
+export default class extends Component {
 
 	state = {
 		text: "",
