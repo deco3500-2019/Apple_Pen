@@ -1,13 +1,31 @@
 import React from 'react';
-import { BrowserRouter, Route } from "react-router-dom";
+import { Route, Link } from "react-router-dom";
 import Client from "./client/Client";
 import Host from "./host/Host";
 
-export default props => 
+export default () => 
 		<div className= "App" >
 			<Route exact path="/" >
-				<div className="App"> Hello, world! </div>
+				<Home/>
 			</Route>
-			<Route path= "/host" component= {Host}/>
-			<Route path= "/client" component= {Client}/>
+			<Route path= "/host">
+				<Host/>
+			</Route>
+			<Route path= "/client">
+				<Client/>
+			</Route>
 		</div>
+
+const Home = () =>
+	<div>
+		<nav>
+			<ul>
+				<li>
+					<Link to="/Client"> Students page </Link>
+				</li>
+				<li>
+					<Link to="/Host"> Teachers page </Link>
+				</li>
+			</ul>
+		</nav>
+	</div>
