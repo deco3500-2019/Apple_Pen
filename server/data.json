@@ -1,0 +1,20 @@
+{
+	"questions": [
+		{
+			"question": "What are your favorite color",
+			"alternatives": [
+				"Blue", 
+				"Red",
+				"Yellow",
+				"Green"
+			],
+			"timeLimit": "10",
+			"correctAnswer": "2"
+		}
+	],
+	"users": {
+		"test": [
+			"1"
+		]
+	}
+}
