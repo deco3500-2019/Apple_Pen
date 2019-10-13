@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Link } from "react-router-dom";
-import Client from "./client/Client";
-import Host from "./host/Host";
+import Client from "./Client/Client";
+import Host from "./Host/Host";
 
 export default () => 
 		<div className= "App" >

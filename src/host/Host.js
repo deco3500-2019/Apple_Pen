@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, useRouteMatch } from "react-router-dom";
-import Chart from "./Chart";
+import Chart from "./Containers/Chart";
 
 export default () => {
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, useRouteMatch, Redirect } from "react-router-dom";
-import Login from "./Login";
-import Idle from "./Idle";
-import Question from "./AnswerQuestion";
+import Login from "./Containers/Login";
+import Idle from "./Containers/Idle";
+import Question from "./Containers/AnswerQuestion";
 
 export default () => {
 
