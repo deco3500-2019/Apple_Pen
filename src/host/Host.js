@@ -1,6 +1,26 @@
-import React, { Component } from "react";
-import axios from 'axios';
+import React from 'react';
+import { Route, useRouteMatch } from "react-router-dom";
+import Chart from "./Chart";
 
+export default () => {
+
+	const match = useRouteMatch();
+
+	return (
+		<div>
+			<Route exact path={`${match.path}/`}>
+				<div>
+					Implement the teachers screen here.
+				</div>
+			</Route>
+			<Route path={`${match.path}/chart`}>
+				<Chart />
+			</Route>
+		</div>
+	)
+}
+
+/*
 export default class extends Component{
 
 	state = {
@@ -37,3 +57,4 @@ export default class extends Component{
 			.catch(err => console.log(err));
 	}
 }
+*/

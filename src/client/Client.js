@@ -1,41 +1,28 @@
-import React, { Component } from "react";
-import { Route } from "react-router-dom";
-import axios from "axios";
+import React from 'react';
+import { Route, useRouteMatch, Redirect } from "react-router-dom";
+import Login from "./Login";
+import Idle from "./Idle";
+import Question from "./AnswerQuestion";
 
-export default class extends Component {
+export default () => {
 
-	state = {
-		text: "",
-		response: ""
-	}
+	const match = useRouteMatch();
 
-	render(){
-		return (
-		<div>
-			<form onSubmit={this.handleSubmit}>
-				<label htmlFor="new-todo">
-					Talk to teacher: 
-				</label>
-				<input
-					id="new-todo"
-					onChange={this.handleChange}
-					value={this.state.text}
-				/>
-				<button>
-					send text
-				</button>
-			</form>
-			<h3>{this.state.response}</h3>
-		</div>
-		)
-	}
-
-	handleChange = e => this.setState({ text: e.target.value })
-
-	handleSubmit = e => {
-		e.preventDefault();
-		axios.post("/", {text: this.state.text})
-			.then(res => this.setState({ response: res.data }))
-			.catch(err => console.log(err));
-	}
+	return(
+	<div className="App" >
+		<Route exact path={`${match.path}/`} >
+			{/* -> First thing user sees is the login page*/ }
+			<Redirect to={`${match.path}/login`}/>
+		</Route>
+		<Route path={`${match.path}/login`}>
+			<Login/>
+		</Route>
+		<Route path={`${match.path}/Idle`}>
+			<Idle/>
+		</Route>
+		<Route path={`${match.path}/Question`}>
+			<Question />
+		</Route>
+	</div>
+	)
 }

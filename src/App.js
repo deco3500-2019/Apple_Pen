@@ -21,10 +21,10 @@ const Home = () =>
 		<nav>
 			<ul>
 				<li>
-					<Link to="/Client"> Students page </Link>
+					<Link to="/client"> Students page </Link>
 				</li>
 				<li>
-					<Link to="/Host"> Teachers page </Link>
+					<Link to="/host"> Teachers page </Link>
 				</li>
 			</ul>
 		</nav>
