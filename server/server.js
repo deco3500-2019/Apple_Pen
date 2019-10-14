@@ -27,6 +27,13 @@ app.post('/reply',
 	(req, res) => res.send(response)
 );
 
+app.post('/addQuestion',
+	(req, res) => {
+		console.log("recieved object: ", req.body)
+		addQuestion(req.body)
+	}
+)
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 //---------------------DATA ACCESS METHODS BELOW-----------------------------------------------------------
@@ -80,3 +87,4 @@ const addQuestion = qObj => {
 	})
 }
 
+const deleteData = () => overwriteData({ questions: [], users: [] })
