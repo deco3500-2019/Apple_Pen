@@ -42,7 +42,11 @@ function getStepContent(step) {
   }
 }
 
-export default function VerticalLinearStepper() {
+const question = {
+
+}
+
+export default props => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();

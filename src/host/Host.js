@@ -1,23 +1,28 @@
-import React, { Fragment }from 'react';
+import React, { Fragment, Component }from 'react';
 import { Route, useRouteMatch } from "react-router-dom";
 import { Stepper, Header, Chart } from "./Containers";
+import { postQuestion } from '../api'
 
-export default () => {
+export default class extends Component {
+	render(){
+		return <Host/>
+	}
+}
+
+const Host = props => {
 
 	const match = useRouteMatch();
 
 	return (
-		<div>
+		<Fragment>
 			<Route exact path={`${match.path}/`}>
-				<Fragment>
-					<Header />
-					<Stepper />
-				</Fragment>
+				<Header />
+				<Stepper postQuestion={postQuestion} />
 			</Route>
 			<Route path={`${match.path}/chart`}>
 				<Chart />
 			</Route>
-		</div>
+		</Fragment>
 	)
 }
 
