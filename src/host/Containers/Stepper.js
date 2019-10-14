@@ -1,107 +1,130 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import {Stepper, Step, StepLabel, StepContent, Button, Paper, Typography} from '@material-ui/core';
 import {SetQuestion, AnswerTime, RightAnswer} from '../Containers'
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   root: {
-    width: '90%',
+	width: '90%',
   },
   button: {
-    marginTop: theme.spacing(1),
-    marginRight: theme.spacing(1),
+	marginTop: theme.spacing(1),
+	marginRight: theme.spacing(1),
   },
   actionsContainer: {
-    marginBottom: theme.spacing(2),
+	marginBottom: theme.spacing(2),
   },
   resetContainer: {
-    padding: theme.spacing(3),
+	padding: theme.spacing(3),
   },
-}));
+});
 
 function getSteps() {
   return ['Set Question & Answers', 'Set Right Answer', 'Set Answer Time'];
 }
 
-function getStepContent(step) {
+const Content = props => {
+  const { step } = props;
   switch (step) {
-    case 0:
-      return <div>
-        <SetQuestion/>
-      </div>;
-    case 1:
-      return <div>
-        <RightAnswer/>
-      </div>;
-    case 2:
-      return <div>
-        <AnswerTime/>
-      </div>;
-    default:
-      return 'Unknown step';
+	case 0:
+	  return <div>
+		<SetQuestion update= { content =>
+		  this.question.text = content
+		}/>
+	  </div>;
+	case 1:
+	  return <div>
+		<RightAnswer update= {content => {
+
+		}}/>
+	  </div>;
+	case 2:
+	  return <div>
+		<AnswerTime/>
+	  </div>;
+	default:
+	  return 'Unknown step';
   }
 }
 
-const question = {
+class CustomizedStepper extends Component{
+	constructor(props){
+		super(props);
+		this.activeStep = props.activeStep;
+		this.setActiveStep = props.setActiveStep;
+		this.steps = getSteps();
+	}
 
+	handleNext = () => {
+		this.setActiveStep(prevActiveStep => prevActiveStep + 1);
+	};
+
+	handleBack = () => {
+		this.setActiveStep(prevActiveStep => prevActiveStep - 1);
+	};
+
+	handleReset = () => {
+		this.setActiveStep(0);
+	};
+
+	render (){
+		const { classes } = this.props;
+		return (
+		<div className={classes.root}>
+			<Stepper activeStep={this.activeStep} orientation="vertical">
+			{this.steps.map((label, index) => (
+				<Step key={label}>
+					<StepLabel>{label}</StepLabel>
+					<StepContent>
+						<Typography>
+							<Content step= {this.activeStep}/>
+						</Typography>
+						<div className={classes.actionsContainer}>
+							<div>
+								<Button
+									disabled={this.activeStep === 0}
+									onClick={this.handleBack}
+									className={classes.button}
+								>
+								Back
+								</Button>
+								<Button
+									variant="contained"
+									color="primary"
+									onClick={this.handleNext}
+									className={classes.button}
+								>
+								{this.activeStep === this.steps.length - 1 ? 'Post' : 'Next'}
+								</Button>
+							</div>
+						</div>
+					</StepContent>
+				</Step>
+			))}
+		  </Stepper>
+		  {this.activeStep === this.steps.length && (
+			<Paper square elevation={0} className={classes.resetContainer}>
+			  <Typography>Post success! - Students will receive it.</Typography>
+			  <Button onClick={this.handleReset} className={classes.button}>
+				Set Another Question
+			  </Button>
+			</Paper>
+		  )}
+		</div>
+		)
+	}
 }
 
-export default props => {
-  const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(0);
-  const steps = getSteps();
+//------------------IGNORE BELOW CODE, BUT DON'T TOUCH!-----------------------------------
 
-  const handleNext = () => {
-    setActiveStep(prevActiveStep => prevActiveStep + 1);
-  };
+Wrapper.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
-  const handleBack = () => {
-    setActiveStep(prevActiveStep => prevActiveStep - 1);
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
-  };
-
-  return (
-    <div className={classes.root}>
-      <Stepper activeStep={activeStep} orientation="vertical">
-        {steps.map((label, index) => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
-            <StepContent>
-              <Typography>{getStepContent(index)}</Typography>
-              <div className={classes.actionsContainer}>
-                <div>
-                  <Button
-                    disabled={activeStep === 0}
-                    onClick={handleBack}
-                    className={classes.button}
-                  >
-                    Back
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleNext}
-                    className={classes.button}
-                  >
-                    {activeStep === steps.length - 1 ? 'Post' : 'Next'}
-                  </Button>
-                </div>
-              </div>
-            </StepContent>
-          </Step>
-        ))}
-      </Stepper>
-      {activeStep === steps.length && (
-        <Paper square elevation={0} className={classes.resetContainer}>
-          <Typography>Post success! - Students will receive it.</Typography>
-          <Button onClick={handleReset} className={classes.button}>
-            Set Another Question
-          </Button>
-        </Paper>
-      )}
-    </div>
-  );
+function Wrapper(props){
+	const [activeStep, setActiveStep] = React.useState(0);
+	return <CustomizedStepper {...props} activeStep= {activeStep} setActiveStep= {setActiveStep}/>
 }
+
+export default withStyles(styles)(Wrapper);
