@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Fragment }from 'react';
 import { Route, useRouteMatch } from "react-router-dom";
-import Chart from "./Containers/Chart";
+import { Stepper, Header, Chart } from "./Containers";
 
 export default () => {
 
@@ -9,9 +9,10 @@ export default () => {
 	return (
 		<div>
 			<Route exact path={`${match.path}/`}>
-				<div>
-					Implement the teachers screen here.
-				</div>
+				<Fragment>
+					<Header />
+					<Stepper />
+				</Fragment>
 			</Route>
 			<Route path={`${match.path}/chart`}>
 				<Chart />
