@@ -68,7 +68,15 @@ const insertUser = username => {
 		obj.users.push({
 			name: username,
 			answers: []
-		})
+		});
 		overwriteData(obj);
 	})
 }
+
+const addQuestion = qObj => {
+	processDataobject( obj => {
+		obj.questions.push(qObj);
+		overwriteData(obj);
+	})
+}
+
