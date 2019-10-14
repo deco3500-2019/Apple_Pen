@@ -3,7 +3,7 @@
 		{
 			"question": "What are your favorite color",
 			"alternatives": [
-				"Blue", 
+				"Blue",
 				"Red",
 				"Yellow",
 				"Green"
@@ -12,9 +12,14 @@
 			"correctAnswer": "2"
 		}
 	],
-	"users": {
-		"test": [
-			"1"
-		]
-	}
+	"users": [
+		{
+			"name": "Test",
+			"answers": []
+		},
+		{
+			"name": "Scotty",
+			"answers": []
+		}
+	]
 }
