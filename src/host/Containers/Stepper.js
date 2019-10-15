@@ -20,26 +20,43 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const question = {
+	text: "",
+	alternatives: ["", "", "", ""],
+	timeLimit: 0,
+	answer: 0
+};
+
+const callBacks = [
+	[
+		text => question.text = text,
+		(alt, text) => question.alternatives[alt] = text
+	],
+	answer => question.answer = answer,
+	time => question.timeLimit = time
+];
+
 const steps = ['Set Question & Answers', 'Set Right Answer', 'Set Answer Time'];
 
 const Content = props => {
-	const {step} = props;
+	const {step, callBack } = props;
 	switch (step) {
 		case 0:
-			return <div> <SetQuestion/> </div>;
+			return <div> <SetQuestion callBack= {callBack}/> </div>;
 		case 1:
-			return <div> <RightAnswer/> </div>;
+			return <div> <RightAnswer callBack= {callBack}/> </div>;
 		case 2:
-			return <div> <AnswerTime/> </div>;
+			return <div> <AnswerTime callBack= {callBack}/> </div>;
 		default:
 			return 'Unknown step';
 	}
 }
 
 export default props => {
-	
+
 	const classes = useStyles();
 	const [activeStep, setActiveStep] = React.useState(0);
+	const callBack = callBacks[activeStep];
 
 	const handleNext = () => {
 		setActiveStep(prevActiveStep => prevActiveStep + 1);
@@ -61,7 +78,7 @@ export default props => {
 				<StepLabel>{label}</StepLabel>
 				<StepContent>
 					<Typography>
-						<Content step= {activeStep}/>
+						<Content step= {activeStep} callBack= {callBack}/>
 					</Typography>
 					<div className={classes.actionsContainer}>
 						<div>

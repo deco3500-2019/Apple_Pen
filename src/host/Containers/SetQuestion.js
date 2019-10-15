@@ -19,9 +19,8 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function FilledTextFields() {
+export default function FilledTextFields(props) {
   const classes = useStyles();
-
   return (
     <form className={classes.container} noValidate autoComplete="off">
  
@@ -36,7 +35,8 @@ export default function FilledTextFields() {
         InputLabelProps={{
           shrink: true,
         }}
-      />
+        onChange= { e => props.callBack[0](e.target.value ) } 
+    />
       <TextField
         id="filled-with-placeholder"
         multiline
@@ -46,6 +46,7 @@ export default function FilledTextFields() {
         className={classes.textField}
         margin="normal"
         variant="filled"
+        onChange={e => props.callBack[1](0, e.target.value)} 
       />
       <TextField
         id="filled-with-placeholder"
@@ -56,6 +57,7 @@ export default function FilledTextFields() {
         className={classes.textField}
         margin="normal"
         variant="filled"
+        onChange={e => props.callBack[1](1, e.target.value)} 
       />
       <TextField
         id="filled-with-placeholder"
@@ -66,6 +68,7 @@ export default function FilledTextFields() {
         className={classes.textField}
         margin="normal"
         variant="filled"
+        onChange={e => props.callBack[1](2, e.target.value)} 
       />
       <TextField
         id="filled-with-placeholder"
@@ -76,6 +79,7 @@ export default function FilledTextFields() {
         className={classes.textField}
         margin="normal"
         variant="filled"
+        onChange={e => props.callBack[1](3, e.target.value)} 
       />
     </form>
   );

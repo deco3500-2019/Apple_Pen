@@ -5,7 +5,7 @@ import { postQuestion } from '../api'
 
 export default class extends Component {
 	render(){
-		return <Host/>
+		return <Host />
 	}
 }
 
