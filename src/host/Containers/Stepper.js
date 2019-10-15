@@ -62,6 +62,10 @@ export default props => {
 	const callBack = callBacks[activeStep];
 
 	const handleNext = () => {
+		if (activeStep === steps.length - 1){
+			props.postQuestion(question);
+			props.reDirectIn(question.timeLimit)
+		}
 		setActiveStep(prevActiveStep => prevActiveStep + 1);
 	};
 
@@ -70,7 +74,6 @@ export default props => {
 	};
 
 	const handleReset = () => {
-		props.postQuestion(question);
 		setActiveStep(0);
 	};
 
@@ -111,7 +114,7 @@ export default props => {
 		<Paper square elevation={0} className={classes.resetContainer}>
 			<Typography>Post success! - Students will receive it.</Typography>
 			<Button onClick={handleReset} className={classes.button}>
-				Set Another Question
+				Create new question
 			</Button>
 		</Paper>
 		)}

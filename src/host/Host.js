@@ -4,26 +4,31 @@ import { Stepper, Header, Chart } from "./Containers";
 import { postQuestion } from '../api'
 
 export default class extends Component {
-	render(){
-		return <Host />
+
+	state = {
+		showChart: false
 	}
-}
 
-const Host = props => {
+	setTimer = time => {
+		this.timerID = setTimeout(() => {
+			this.setState({ showChart: true })
+		}, (time + 5) * 1000);
+	}
 
-	const match = useRouteMatch();
+	showQuestionForm = () => this.setState({showChart: false})
 
-	return (
+	render(){
+		const { showChart } = this.state
+		return (
 		<Fragment>
-			<Route exact path={`${match.path}/`}>
-				<Header />
-				<Stepper postQuestion={postQuestion} />
-			</Route>
-			<Route path={`${match.path}/chart`}>
-				<Chart />
-			</Route>
+			<Header />
+			{showChart ?
+			<Chart/>
+			: 
+			<Stepper postQuestion={postQuestion} reDirectIn= {this.setTimer}/>}
 		</Fragment>
-	)
+		)
+	}
 }
 
 /*
