@@ -1,7 +1,14 @@
 import axios from "axios";
 
-const postQuestion = qObj => axios.post('/addQuestion', qObj);
+export default {
 
-export {
-	postQuestion
+	async postQuestion(qObj){
+		axios.post('/addQuestion', qObj)
+	},
+
+	async fetchQuestions(userid) {
+		return axios.post(`${userid}/getQuestions`)
+			.then(res => res.data)
+			.catch(err => console.log(err))
+	}
 }

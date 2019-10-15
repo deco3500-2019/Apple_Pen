@@ -1,7 +1,7 @@
 import React, { Fragment, Component }from 'react';
 import { Route, useRouteMatch } from "react-router-dom";
 import { Stepper, Header, Chart } from "./Components";
-import { postQuestion } from '../api'
+import api from '../api'
 
 export default class extends Component {
 
@@ -25,7 +25,7 @@ export default class extends Component {
 			{showChart ?
 			<Chart/>
 			: 
-			<Stepper postQuestion={postQuestion} reDirectIn= {this.setTimer}/>}
+			<Stepper postQuestion={api.postQuestion} reDirectIn= {this.setTimer}/>}
 		</Fragment>
 		)
 	}

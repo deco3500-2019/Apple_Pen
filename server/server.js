@@ -9,22 +9,22 @@ const port = 4000
 
 const DATA_PATH = path.resolve(__dirname, 'data.json');
 
-let response;
-
 app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 
-app.post('/',
+app.post('/:userid/getQuestions',
 	(req, res) => {
-		response = req.body.text;
-		res.send(`Hello from backend! You sent "${response}"`);
+		processDataObject( obj => {
+			const user = obj.users.find( u => u.username === userid) //find user in data.json
+			if (obj.questions.length === user.answers.length) {  // No new question
+				res.send('Up to date')
+			} else {
+				res.send(obj.questions[-1])
+			}
+		})
 	}
-);
-
-app.post('/reply',
-	(req, res) => res.send(response)
 );
 
 app.post('/addQuestion',
@@ -38,7 +38,7 @@ app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 //---------------------DATA ACCESS METHODS BELOW-----------------------------------------------------------
 
-const processDataobject = handleData => {
+const processDataObject = handleData => {
 	fs.readFile(DATA_PATH, 'utf8', (err, jsonString) => {
 		if (err) {
 			console.log("File read failed:", err);
@@ -47,7 +47,6 @@ const processDataobject = handleData => {
 		handleData(jsonStringToObject(jsonString));
 	});
 }
-
 
 const jsonStringToObject = jsonString => {
 	try {
@@ -71,7 +70,7 @@ const overwriteData = object => {
 }
 
 const insertUser = username => {
-	processDataobject( obj => {
+	processDataObject( obj => {
 		obj.users.push({
 			name: username,
 			answers: []
@@ -81,7 +80,7 @@ const insertUser = username => {
 }
 
 const addQuestion = qObj => {
-	processDataobject( obj => {
+	processDataObject( obj => {
 		obj.questions.push(qObj);
 		overwriteData(obj);
 	})
