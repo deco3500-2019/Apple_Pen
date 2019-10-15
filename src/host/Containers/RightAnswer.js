@@ -55,20 +55,22 @@ function StyledRadio(props) {
       color="default"
       checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
       icon={<span className={classes.icon} />}
+      onChange= {e => props.callBack(props.index)}
       {...props}
     />
   );
 }
 
-export default function CustomizedRadios() {
+export default function CustomizedRadios(props) {
+  const { callBack } = props
   return (
     <FormControl component="fieldset">
       <FormLabel component="legend">Click on the correct answer</FormLabel>
       <RadioGroup defaultValue="Answer A" aria-label="answer" name="customized-radios">
-        <FormControlLabel value="Answer A" control={<StyledRadio />} label="Answer A" />
-        <FormControlLabel value="Answer B" control={<StyledRadio />} label="Answer B" />
-        <FormControlLabel value="Answer C" control={<StyledRadio />} label="Answer C" />
-        <FormControlLabel value="Answer D" control={<StyledRadio />} label="Answer D" />
+        <FormControlLabel value="Answer A" control={<StyledRadio index={0} callBack= {callBack}/>} label="Answer A" />
+        <FormControlLabel value="Answer B" control={<StyledRadio index={1} callBack={callBack} />} label="Answer B" />
+        <FormControlLabel value="Answer C" control={<StyledRadio index={2} callBack={callBack}/>} label="Answer C" />
+        <FormControlLabel value="Answer D" control={<StyledRadio index={3} callBack={callBack}/>} label="Answer D" />
       </RadioGroup>
     </FormControl>
   );

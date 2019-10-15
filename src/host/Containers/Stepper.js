@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
 const question = {
 	text: "",
 	alternatives: ["", "", "", ""],
-	timeLimit: 0,
+	timeLimit: 10,
 	answer: 0
 };
 
@@ -67,6 +67,8 @@ export default props => {
 	};
 
 	const handleReset = () => {
+		props.postQuestion(question);
+
 		setActiveStep(0);
 	};
 

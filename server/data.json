@@ -1,7 +1,7 @@
 {
 	"questions": [
 		{
-			"question": "What are your favorite color",
+			"text": "What are your favorite color",
 			"alternatives": [
 				"Blue",
 				"Red",
@@ -9,7 +9,18 @@
 				"Green"
 			],
 			"timeLimit": "10",
-			"correctAnswer": "2"
+			"answer": "2"
+		},
+		{
+			"text": "hey",
+			"alternatives": [
+				"ho",
+				"lets",
+				"go",
+				"woo!"
+			],
+			"timeLimit": 0,
+			"answer": 0
 		}
 	],
 	"users": [
