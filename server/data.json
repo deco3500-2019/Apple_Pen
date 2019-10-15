@@ -21,6 +21,17 @@
 			],
 			"timeLimit": 0,
 			"answer": 0
+		},
+		{
+			"text": "are",
+			"alternatives": [
+				"you",
+				"a",
+				"cool",
+				"guy"
+			],
+			"timeLimit": 60,
+			"answer": 2
 		}
 	],
 	"users": [

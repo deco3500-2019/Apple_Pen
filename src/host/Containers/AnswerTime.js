@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function TimePickers() {
+export default function TimePickers(props) {
   const classes = useStyles();
 
   return (
@@ -31,7 +31,11 @@ export default function TimePickers() {
         inputProps={{
           step: 300, // 5 min
         }}
-      />
+        onChange={e => {
+          const sec = e.target.value.split(':').reduce((acc, time) => (60 * acc) + +time);
+          props.callBack(sec);
+        }}
+    />
     </form>
   );
 }

@@ -33,7 +33,10 @@ const callBacks = [
 		(alt, text) => question.alternatives[alt] = text
 	],
 	answer => question.answer = answer,
-	time => question.timeLimit = time
+	time => {
+		console.log(time);
+		question.timeLimit = time
+	}
 ];
 
 const steps = ['Set Question & Answers', 'Set Right Answer', 'Set Answer Time'];
@@ -68,7 +71,6 @@ export default props => {
 
 	const handleReset = () => {
 		props.postQuestion(question);
-
 		setActiveStep(0);
 	};
 
