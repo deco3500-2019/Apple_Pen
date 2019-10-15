@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import {Stepper, Step, StepLabel, StepContent, Button, Paper, Typography} from '@material-ui/core';
-import {SetQuestion, AnswerTime, RightAnswer} from '../Containers'
+import {SetQuestion, AnswerTime, RightAnswer} from '../Components'
 
 const useStyles = makeStyles(theme => ({
   root: {

@@ -1,8 +1,6 @@
 import React from 'react';
 import { Route, useRouteMatch, Redirect } from "react-router-dom";
-import Login from "./Containers/Login";
-import Idle from "./Containers/Idle";
-import Question from "./Containers/AnswerQuestion";
+import { Login, AnswerQuestion, Idle} from "./Components";
 
 export default () => {
 
@@ -21,7 +19,7 @@ export default () => {
 			<Idle/>
 		</Route>
 		<Route path={`${match.path}/Question`}>
-			<Question />
+			<AnswerQuestion />
 		</Route>
 	</div>
 	)

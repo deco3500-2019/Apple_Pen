@@ -1,6 +1,6 @@
 import React, { Fragment, Component }from 'react';
 import { Route, useRouteMatch } from "react-router-dom";
-import { Stepper, Header, Chart } from "./Containers";
+import { Stepper, Header, Chart } from "./Components";
 import { postQuestion } from '../api'
 
 export default class extends Component {
