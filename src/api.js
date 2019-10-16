@@ -7,7 +7,9 @@ export default {
 	},
 
 	async fetchQuestions(userid) {
-		return axios.post(`${userid}/getQuestions`)
+		return axios.post(`/getQuestions`, {
+			id: userid
+		})
 			.then(res => res.data)
 			.catch(err => console.log(err))
 	}

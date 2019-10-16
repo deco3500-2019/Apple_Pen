@@ -14,25 +14,31 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 
-app.post('/:userid/getQuestions',
-	(req, res) => {
-		processDataObject( obj => {
-			const user = obj.users.find( u => u.username === userid) //find user in data.json
-			if (obj.questions.length === user.answers.length) {  // No new question
-				res.send('Up to date')
-			} else {
-				res.send(obj.questions[-1])
-			}
-		})
-	}
-);
-
 app.post('/addQuestion',
 	(req, res) => {
-		console.log("recieved object: ", req.body)
+		console.log("recieved question object: ", req.body)
 		addQuestion(req.body)
 	}
 )
+
+app.post('/getQuestions', (req, res) => {
+	const { id } = req.body;
+	console.log(`user ${id} requested questions`)
+	processDataObject( obj => {
+		const user = obj.users.find( u => u.username === id) //find user in data.json
+		console.log('when fetching questions, in file, found user obj: ', user);
+		if (obj.questions.length === user.answers.length) {  // No new question
+			res.json({ success: false })
+		} else {
+			res.json({ success: true, question: obj.questions[-1]})
+		}
+	})
+});
+
+app.post('/addAnswer', (req, res) => {
+	const {id, answer} = req.body;
+	addAnswer(id, answer)
+})
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
@@ -40,10 +46,7 @@ app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 const processDataObject = handleData => {
 	fs.readFile(DATA_PATH, 'utf8', (err, jsonString) => {
-		if (err) {
-			console.log("File read failed:", err);
-		}
-		console.log('File data read from disc:', jsonString);
+		if (err) console.log("File read failed:", err);
 		handleData(jsonStringToObject(jsonString));
 	});
 }
@@ -82,6 +85,14 @@ const insertUser = username => {
 const addQuestion = qObj => {
 	processDataObject( obj => {
 		obj.questions.push(qObj);
+		overwriteData(obj);
+	})
+}
+
+const addAnswer = (id, answer) => {
+	processDataObject( obj => {
+		const user = obj.users.find(id);
+		user.answer.push(answer);
 		overwriteData(obj);
 	})
 }
