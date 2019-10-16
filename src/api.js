@@ -6,15 +6,18 @@ export default {
 		axios.post('/addQuestion', qObj)
 	},
 
-	async fetchQuestions(userid) {
-		return axios.post(`/getQuestions`, {
+	fetchQuestion(userid) {
+		return axios.post(`/getQuestion`, {
 			id: userid
 		})
 			.then(res => res.data)
-			.catch(err => console.log(err))
 	},
 
 	async postAnswer(userid, answer) {
 		return axios.post('/addAnswer', { id: userid, answer: answer})
+	},
+
+	fetchAnswers(){
+		return axios.post('/getAnswers').then(res => res.data)
 	}
 }

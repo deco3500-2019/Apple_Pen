@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import {Stepper, Step, StepLabel, StepContent, Button, Paper, Typography} from '@material-ui/core';
 import {SetQuestion, AnswerTime, RightAnswer} from '../Components'
+import api from "../../api";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -63,7 +64,7 @@ export default props => {
 
 	const handleNext = () => {
 		if (activeStep === steps.length - 1){
-			props.postQuestion(question);
+			api.postQuestion(question);
 			props.reDirectIn(question.timeLimit)
 		}
 		setActiveStep(prevActiveStep => prevActiveStep + 1);

@@ -19,7 +19,7 @@ app.post('/addQuestion', (req, res) => {
 	addQuestion(req.body)
 })
 
-app.post('/getQuestions', (req, res) => {
+app.post('/getQuestion', (req, res) => {
 	const { id } = req.body;
 	processObjectFromFile(id, user => {  // First access users file. TODO: error handling
 		processObjectFromFile("questions", qObj => {  // Second access question file
@@ -37,6 +37,20 @@ app.post('/addAnswer', (req, res) => {
 	const {id, answer} = req.body;
 	console.log(`user ${id} would like to save answer: ${answer}`);
 	addAnswer(id, answer)
+})
+
+app.post('/getAnswers' , (req, res) => {
+	fs.readdir(__dirname, (err, files) => {
+		const answers = [];
+		files.filter(f => f != "server.js" && f != "questions.json")
+		.map(f => f.slice(0, f.length - 5))
+		.forEach( filename => {
+			const user = jsonStringToObject(fs.readFileSync(getPath(filename)));
+			console.log(user)
+			answers.push(user.answers[user.answers.length - 1])
+		});
+		res.json(answers)
+	})
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

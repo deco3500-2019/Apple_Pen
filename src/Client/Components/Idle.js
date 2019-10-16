@@ -7,7 +7,7 @@ export default class extends Component {
 		connect: true
 	}
 
-	componentDidMount() {
+	async componentDidMount() {
 		this.timerID = setInterval(
 			() => this.tick(),
 			1000
@@ -15,18 +15,18 @@ export default class extends Component {
 	}
 
 	async tick(){
-		const response = await api.fetchQuestions(this.props.id);
-		console.log(response);
-		try {
+		api.fetchQuestion(this.props.id).then( response => {
+			console.log(response);
 			if (!response.success){
 				if (!this.state.connect) this.setState({ connect: true })
 				return
 			}
 			clearInterval(this.timerID);
 			this.props.reDirect(response.question)
-		} catch (error) {
+		})
+		.catch( error => {
 			if (this.state.connect) this.setState({ connect: false })
-		}
+		})
 	}
 
 	render() {

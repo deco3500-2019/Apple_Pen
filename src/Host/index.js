@@ -1,7 +1,6 @@
 import React, { Fragment, Component }from 'react';
 import { Route, useRouteMatch } from "react-router-dom";
 import { Stepper, Header, Chart } from "./Components";
-import api from '../api'
 
 export default class extends Component {
 
@@ -23,49 +22,10 @@ export default class extends Component {
 		<Fragment>
 			<Header />
 			{showChart ?
-			<Chart/>
+			<Chart reDirect= {this.showQuestionForm}/>
 			: 
-			<Stepper postQuestion={api.postQuestion} reDirectIn= {this.setTimer}/>}
+			<Stepper reDirectIn= {this.setTimer}/>}
 		</Fragment>
 		)
 	}
 }
-
-/*
-export default class extends Component{
-
-	state = {
-		response: ""
-	}
-
-	componentDidMount(){
-		this.timerID = setInterval(
-			() => this.tick(),
-			1000
-		);
-	}
-
-	componentWillUnmount() {
-		clearInterval(this.timerID);
-	}
-
-	render(){
-		return(
-		<div>
-			This is the teachers screen. Student replied: {this.state.response}
-		</div>
-		)
-	}
-
-	tick(){
-		axios.post('/reply')
-			.then(
-				res => {
-					if (res.data === this.state.response) return res
-					this.setState({ response: res.data });
-				}
-			)
-			.catch(err => console.log(err));
-	}
-}
-*/
