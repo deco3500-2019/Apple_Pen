@@ -7,7 +7,7 @@ const path = require('path')
 const app = express()
 const port = 4000
 
-const DATA_PATH = path.resolve(__dirname, 'data.json');
+const getPath = filename => path.resolve(__dirname, `${filename}.json`)
 
 app.use(cors());
 
@@ -23,15 +23,16 @@ app.post('/addQuestion',
 
 app.post('/getQuestions', (req, res) => {
 	const { id } = req.body;
-	processDataObject( obj => {
-		const user = obj.users.find( u => u.name == id) //find user in data.json
-		if (obj.questions.length === user.answers.length) {  // No new question
-			res.json({ success: false })
-		} else {
-			console.log(`user ${id} requested questions`)
-			console.log('when fetching questions, in file, found user obj: ', user);
-			res.json({ success: true, question: obj.questions[obj.questions.length - 1]})
-		}
+	processDataObject(id, user => {
+		console.log(`user: ${id} found obj:`, user)
+		processDataObject("questions", qObj => {
+			if (qObj.data.length === user.answers.length) {  // No new question
+				res.json({ success: false })
+			} else {
+				console.log(`user ${id} requested questions`)
+				res.json({ success: true, question: qObj.data[obj.questions.length - 1] })
+			}
+		})
 	})
 });
 
@@ -45,9 +46,12 @@ app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 //---------------------DATA ACCESS METHODS BELOW-----------------------------------------------------------
 
-const processDataObject = handleData => {
-	fs.readFile(DATA_PATH, 'utf8', (err, jsonString) => {
-		if (err) console.log("File read failed:", err);
+const processDataObject = (filename, handleData) => {
+	fs.readFile(getPath(filename), 'utf8', (err, jsonString) => {
+		if (err) {
+			console.log("File read failed:", err);
+			return
+		}
 		handleData(jsonStringToObject(jsonString));
 	});
 }
@@ -61,9 +65,9 @@ const jsonStringToObject = jsonString => {
 	}
 }
 
-const overwriteData = object => {
+const overwriteData = (filename, object) => {
 	const jsonString = JSON.stringify(object);
-	fs.writeFile(DATA_PATH, jsonString, err => {
+	fs.writeFile(getPath(filename), jsonString, err => {
 		if (err) {
 			console.log('Error writing file', err)
 		} else {
@@ -72,28 +76,19 @@ const overwriteData = object => {
 	})
 }
 
-const insertUser = username => {
-	processDataObject( obj => {
-		obj.users.push({
-			name: username,
-			answers: []
-		});
-		overwriteData(obj);
-	})
-}
+const insertUser = username => overwriteData(username, { answers: [] })
 
 const addQuestion = qObj => {
-	processDataObject( obj => {
-		obj.questions.push(qObj);
+	processDataObject("questions", q => {
+		q.data.push(qObj);
 		overwriteData(obj);
 	})
 }
 
 const addAnswer = (id, answer) => {
-	processDataObject( obj => {
-		const user = obj.users.find(u => u.name == id);
+	processDataObject(id, user => {
 		user.answers.push(answer);
-		overwriteData(obj);
+		overwriteData(id, user);
 	})
 }
 

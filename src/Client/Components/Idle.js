@@ -1,5 +1,5 @@
 import React, { Component} from "react";
-import api from '/Users/ScottGullaksen/deco7350/src/api'
+import api from "../../api"
 
 export default class extends Component {
 
