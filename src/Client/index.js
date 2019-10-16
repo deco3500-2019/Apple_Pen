@@ -1,32 +1,28 @@
 import React, { Component, Fragment } from 'react';
-import { Route, useRouteMatch, Redirect } from "react-router-dom";
 import { Login, AnswerQuestion, Idle} from "./Components";
 
 export default class extends Component{
 	
 	state = {
-		loggedIn: true
+		loggedIn: true,
+		question: false,
+	}
+
+	showQuestion = q => {
+		console.log(q);
+		this.setState({ question: q })
 	}
 
 	render(){
-		return <Client loggedIn= {this.state.loggedIn}/>
-	}
-}
-
-const Client = props => {
-	const match = useRouteMatch();
-
-	return (
-		<Fragment>
-			<Route exact path={`${match.url}/`}>
-				{!props.loggedIn ?
-				<Redirect to={`${match.url}/login`} />
-				: 
-				<Idle/>}
-			</Route>
-			<Route exact path={`${match.url}/login`}>
+		return (
+			<Fragment>
+				{ !this.state.loggedIn ? 
 				<Login/>
-			</Route>
-		</Fragment>
-	)
+				: !this.state.question ?  // If logged in and no question posed
+				<Idle reDirect= {this.showQuestion} />
+				:  // If logged in and question posed
+				<AnswerQuestion question={this.state.question} /> }
+			</Fragment>
+		)
+	}
 }

@@ -4,8 +4,7 @@ import api from '/Users/ScottGullaksen/deco7350/src/api'
 export default class extends Component {
 
 	state = {
-		text: "",
-		response: ""
+		connect: true
 	}
 
 	componentDidMount() {
@@ -15,39 +14,29 @@ export default class extends Component {
 		);
 	}
 
-	componentWillUnmount() {
-		clearInterval(this.timerID);
-	}
-
 	async tick(){
 		const response = await api.fetchQuestions("Scotty");
 		console.log(response);
 		try {
-			if (!response.success) return
-			this.setState({ response: JSON.stringify(response.question) });
+			if (!response.success){
+				if (!this.state.connect) this.setState({ connect: true })
+				return
+			}
+			clearInterval(this.timerID);
+			this.props.reDirect(response.question)
 		} catch (error) {
-			this.setState({ response: "Could not connect to server" });
+			if (this.state.connect) this.setState({ connect: false })
 		}
 	}
 
 	render() {
 		return (
-		<div>
-			<form onSubmit={ () => {} }>
-				<label htmlFor="new-todo">
-						Talk to teacher:
-				</label>
-				<input
-					id="new-todo"
-					onChange={() => { }}
-					value={this.state.text}
-				/>
-				<button>
-					send text
-				</button>
-			</form>
-			<h3>{this.state.response}</h3>
-		</div>
-		)
+			<h3>
+				{this.state.connect ? 
+				"waiting for new question"
+				:
+				"Cannot connect to backend"}
+			</h3>
+		) 
 	}
 }

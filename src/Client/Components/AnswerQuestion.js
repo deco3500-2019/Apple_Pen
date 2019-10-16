@@ -1,6 +1,6 @@
-import { React } from "react";
+import React from "react";
 
-export default () =>
-	<div>
-		Implement the question screen here.
-	</div>
+export default props =>
+	<h3>
+		{JSON.stringify(props.question)}
+	</h3>
