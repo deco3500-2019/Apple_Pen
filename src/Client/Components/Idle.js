@@ -15,7 +15,7 @@ export default class extends Component {
 	}
 
 	async tick(){
-		const response = await api.fetchQuestions("Scotty");
+		const response = await api.fetchQuestions(this.props.id);
 		console.log(response);
 		try {
 			if (!response.success){

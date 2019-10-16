@@ -6,6 +6,7 @@ export default class extends Component{
 	state = {
 		loggedIn: true,
 		question: false,
+		userID: "Scotty"
 	}
 
 	showQuestion = q => {
@@ -13,15 +14,20 @@ export default class extends Component{
 		this.setState({ question: q })
 	}
 
+	showIdle = () => {
+		this.setState({ question: false })
+	}
+
 	render(){
+		const {loggedIn, userID, question} = this.state;
 		return (
 			<Fragment>
-				{ !this.state.loggedIn ? 
+				{ !loggedIn ? 
 				<Login/>
-				: !this.state.question ?  // If logged in and no question posed
-				<Idle reDirect= {this.showQuestion} />
+				: !question ?  // If logged in and no question posed
+				<Idle reDirect= {this.showQuestion} id={userID} />
 				:  // If logged in and question posed
-				<AnswerQuestion question={this.state.question} /> }
+				<AnswerQuestion question={question} reDirect= {this.showIdle} id={userID}/>}
 			</Fragment>
 		)
 	}

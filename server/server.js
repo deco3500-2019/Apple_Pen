@@ -37,6 +37,7 @@ app.post('/getQuestions', (req, res) => {
 
 app.post('/addAnswer', (req, res) => {
 	const {id, answer} = req.body;
+	console.log(`user ${id} would like to save answer: ${answer}`);
 	addAnswer(id, answer)
 })
 
@@ -61,13 +62,12 @@ const jsonStringToObject = jsonString => {
 }
 
 const overwriteData = object => {
-	console.log("saving object: ", );
 	const jsonString = JSON.stringify(object);
 	fs.writeFile(DATA_PATH, jsonString, err => {
 		if (err) {
 			console.log('Error writing file', err)
 		} else {
-			console.log('Successfully wrote file')
+			console.log('Successfully overwrote file')
 		}
 	})
 }
@@ -91,8 +91,8 @@ const addQuestion = qObj => {
 
 const addAnswer = (id, answer) => {
 	processDataObject( obj => {
-		const user = obj.users.find(id);
-		user.answer.push(answer);
+		const user = obj.users.find(u => u.name == id);
+		user.answers.push(answer);
 		overwriteData(obj);
 	})
 }

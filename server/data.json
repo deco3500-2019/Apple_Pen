@@ -1,21 +1,11 @@
 {
 	"questions": [
-		{
-			"text": "hey",
-			"alternatives": [
-				"ho ",
-				"lets",
-				"go",
-				"whoo!"
-			],
-			"timeLimit": 1,
-			"answer": 1
-		}
 	],
 	"users": [
 		{
 			"name": "Scotty",
-			"answers": []
+			"answers": [
+			]
 		}
 	]
 }

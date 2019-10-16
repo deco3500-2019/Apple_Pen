@@ -12,5 +12,9 @@ export default {
 		})
 			.then(res => res.data)
 			.catch(err => console.log(err))
+	},
+
+	async postAnswer(userid, answer) {
+		return axios.post('/addAnswer', { id: userid, answer: answer})
 	}
 }
