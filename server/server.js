@@ -14,23 +14,20 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 
-app.post('/addQuestion',
-	(req, res) => {
-		console.log("recieved question object: ", req.body)
-		addQuestion(req.body)
-	}
-)
+app.post('/addQuestion', (req, res) => {
+	console.log("recieved question object: ", req.body)
+	addQuestion(req.body)
+})
 
 app.post('/getQuestions', (req, res) => {
 	const { id } = req.body;
-	processDataObject(id, user => {
-		console.log(`user: ${id} found obj:`, user)
-		processDataObject("questions", qObj => {
+	processObjectFromFile(id, user => {  // First access users file. TODO: error handling
+		processObjectFromFile("questions", qObj => {  // Second access question file
 			if (qObj.data.length === user.answers.length) {  // No new question
 				res.json({ success: false })
 			} else {
-				console.log(`user ${id} requested questions`)
-				res.json({ success: true, question: qObj.data[obj.questions.length - 1] })
+				console.log(`user ${id} successfully accessed questions`)
+				res.json({ success: true, question: qObj.data[qObj.data.length - 1] })
 			}
 		})
 	})
@@ -46,14 +43,14 @@ app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 //---------------------DATA ACCESS METHODS BELOW-----------------------------------------------------------
 
-const processDataObject = (filename, handleData) => {
+const processObjectFromFile = (filename, handleData) => {
 	fs.readFile(getPath(filename), 'utf8', (err, jsonString) => {
 		if (err) {
 			console.log("File read failed:", err);
 			return
 		}
-		handleData(jsonStringToObject(jsonString));
-	});
+		handleData(jsonStringToObject(jsonString))
+	})
 }
 
 const jsonStringToObject = jsonString => {
@@ -79,17 +76,15 @@ const overwriteData = (filename, object) => {
 const insertUser = username => overwriteData(username, { answers: [] })
 
 const addQuestion = qObj => {
-	processDataObject("questions", q => {
+	processObjectFromFile("questions", q => {
 		q.data.push(qObj);
-		overwriteData(obj);
+		overwriteData("questions", q);
 	})
 }
 
 const addAnswer = (id, answer) => {
-	processDataObject(id, user => {
+	processObjectFromFile(id, user => {
 		user.answers.push(answer);
 		overwriteData(id, user);
 	})
 }
-
-const deleteData = () => overwriteData({ questions: [], users: [] })
