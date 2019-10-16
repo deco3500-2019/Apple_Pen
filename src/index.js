@@ -15,18 +15,4 @@ const App = () =>
 			</Route>
 		</BrowserRouter>
 
-const Home = () =>
-	<div>
-		<nav>
-			<ul>
-				<li>
-					<Link to="/client"> Students page </Link>
-				</li>
-				<li>
-					<Link to="/host"> Teachers page </Link>
-				</li>
-			</ul>
-		</nav>
-	</div>
-
 ReactDOM.render(<App/> , document.getElementById('root'));

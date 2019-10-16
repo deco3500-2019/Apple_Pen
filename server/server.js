@@ -23,14 +23,14 @@ app.post('/addQuestion',
 
 app.post('/getQuestions', (req, res) => {
 	const { id } = req.body;
-	console.log(`user ${id} requested questions`)
 	processDataObject( obj => {
-		const user = obj.users.find( u => u.username === id) //find user in data.json
-		console.log('when fetching questions, in file, found user obj: ', user);
+		const user = obj.users.find( u => u.name == id) //find user in data.json
 		if (obj.questions.length === user.answers.length) {  // No new question
 			res.json({ success: false })
 		} else {
-			res.json({ success: true, question: obj.questions[-1]})
+			console.log(`user ${id} requested questions`)
+			console.log('when fetching questions, in file, found user obj: ', user);
+			res.json({ success: true, question: obj.questions[obj.questions.length - 1]})
 		}
 	})
 });

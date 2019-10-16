@@ -5,7 +5,7 @@ import { Login, AnswerQuestion, Idle} from "./Components";
 export default class extends Component{
 	
 	state = {
-		loggedIn: false
+		loggedIn: true
 	}
 
 	render(){
