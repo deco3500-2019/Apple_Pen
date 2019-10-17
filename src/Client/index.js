@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
-import { Login, AnswerQuestion, Idle} from "./Components";
+import { Login, AnswerQuestion, Idle, Header} from "./Components";
 
 export default class extends Component{
-	
+
 	state = {
 		loggedIn: true,
 		question: false,
@@ -22,6 +22,7 @@ export default class extends Component{
 		const {loggedIn, userID, question} = this.state;
 		return (
 			<Fragment>
+				<Header />
 				{ !loggedIn ? 
 				<Login/>
 				: !question ?  // If logged in and no question posed

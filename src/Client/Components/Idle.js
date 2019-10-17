@@ -1,5 +1,19 @@
 import React, { Component} from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import api from "../../api"
+
+const useStyles = makeStyles(theme => ({
+	root: {
+		width: "414px",
+		height: "736px",
+		background: "#E1CCBD",
+		color: "black",
+		display: "flex",
+		textalign: "center",
+		justifyContent: "center",
+		alignItems: "center"
+	}
+}));
 
 export default class extends Component {
 
@@ -31,12 +45,20 @@ export default class extends Component {
 
 	render() {
 		return (
-			<h3>
-				{this.state.connect ? 
-				"waiting for new question"
-				:
-				"Cannot connect to backend"}
-			</h3>
+			<Display {...this.state} />
 		) 
 	}
+}
+
+const Display = props => {
+	const classes = useStyles();
+	return(
+		<div className={classes.root}>
+			<h1> {props.connect ?
+			"Loading..."
+			:
+			"Unable to connect to server"}
+			</h1>
+		</div>
+	)
 }
