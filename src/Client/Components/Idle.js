@@ -31,12 +31,12 @@ export default class extends Component {
 	async tick(){
 		api.fetchQuestion(this.props.id).then( response => {
 			console.log(response);
-			if (!response.success){
+			if (!response.success){ 
 				if (!this.state.connect) this.setState({ connect: true })
 				return
 			}
 			clearInterval(this.timerID);
-			this.props.reDirect(response.question)
+			this.props.reDirect(response.question)  // TODO: Handle undefined (answers > questions)
 		})
 		.catch( error => {
 			if (this.state.connect) this.setState({ connect: false })
@@ -50,11 +50,11 @@ export default class extends Component {
 	}
 }
 
-const Display = props => {
+const Display = ({ connect }) => {
 	const classes = useStyles();
 	return(
 		<div className={classes.root}>
-			<h1> {props.connect ?
+			<h1> {connect ?
 			"Loading..."
 			:
 			"Unable to connect to server"}

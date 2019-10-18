@@ -1,15 +1,1 @@
-{
-	"data": [
-		{
-			"text": "hey",
-			"alternatives": [
-				"how ",
-				"are",
-				"you",
-				"doing"
-			],
-			"timeLimit": 10,
-			"answer": 2
-		}
-	]
-}
+{"data":[]}

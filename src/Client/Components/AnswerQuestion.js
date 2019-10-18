@@ -1,11 +1,12 @@
 import React, { Component } from "react";
+import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import AlarmIcon from "@material-ui/icons/Alarm";
 import api from "../../api";
 
-let useStyles = makeStyles(theme => ({
+let useStyles = makeStyles(theme =>({
 	root: {
 		width: "414px",
 		height: "736px",
@@ -17,7 +18,16 @@ let useStyles = makeStyles(theme => ({
 		width: "134px",
 		height: "76px"
 	},
-
+	buttonSelected: {
+		backgroundColor: theme.palette.grey.A100,
+		boxShadow: theme.shadows[4]
+	},
+	buttonWrong: {
+		backgroundColor: theme.palette.error.main
+	},
+	buttonCorrect: {
+		backgroundColor: "#4caf50"
+	},
 	title: {
 		fontFamily: "Impact",
 		padding: "20px",
@@ -42,31 +52,39 @@ let useStyles = makeStyles(theme => ({
 export default class extends Component {
 
 	state = {
-		answer: ""
+		answer: "",
+		showResult: false
 	}
 
 	componentDidMount(){
-		const timerID = setTimeout( () => {
-			// Post answer and Redirect to scoreBoard
+		setTimeout( () => {
 			this.timeOut()
 		}, this.props.question.timeLimit * 1000)
 	}
 
 	timeOut(){
 		api.postAnswer(this.props.id, this.state.answer);
-		this.props.reDirect()
+		this.setState({ showResult: true });
+		setTimeout(() => {
+			this.props.reDirect()  // Give user chance to see if they answered wrong or correct, then switch page
+		}, 10 * 1000)
 	}
 
 	render(){
 		return (
-			<ContainedButtons {...this.props } answer= {this.answer} setAnswer= { a => this.setState({answer: a})} />
+			<ContainedButtons
+				{...this.props }
+				answer={this.state.answer}
+				showResult= {this.state.showResult}
+				setAnswer= { a => this.setState({answer: a})}
+			/>
 		)
 	}
 }
 
 const ContainedButtons = props => {
 	const classes = useStyles();
-	const { text, alternatives } = props.question
+	const { text, alternatives, answer } = props.question
 
 	return (
 		<div className={classes.root}>
@@ -83,11 +101,21 @@ const ContainedButtons = props => {
 			<div className={classes.content}>
 				{props.question.text}
 			</div> {[0, 1, 2, 3].map(key => 
-			<Button variant="contained" className={classes.button} onClick= { () =>{
-				props.setAnswer(key)
-			}}>
-			{alternatives[key] }
-			</Button>) }
+				<Button
+					variant="contained"
+					className = { clsx(classes.button,
+						!props.showResult ? 
+							{ [classes.buttonSelected]: props.answer === key }
+							:
+							key === props.answer && props.answer !== answer ?
+								{ [classes.buttonWrong]: true }
+								:
+								{ [classes.buttonCorrect]: answer === key }
+					)}
+					onClick= { () => props.setAnswer(key)}
+				>
+				{alternatives[key]}
+				</Button>) }
 		</div>
 	);
 }
