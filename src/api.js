@@ -19,5 +19,9 @@ export default {
 
 	fetchAnswers(){
 		return axios.post('/getAnswers').then(res => res.data)
+	},
+
+	async postNewUser(userid) {
+		return axios.post('/addUser', {id: userid}).then(res => res.data)
 	}
 }

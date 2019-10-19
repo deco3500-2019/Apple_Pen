@@ -8,6 +8,10 @@ export default class extends Component {
 		showChart: false
 	}
 
+	componentWillUnmount(){
+		// TODO: delete question file in backend
+	}
+
 	setTimer = time => {
 		this.timerID = setTimeout(() => {
 			this.setState({ showChart: true })

@@ -55,6 +55,12 @@ app.post('/getAnswers' , (req, res) => {
 	})
 })
 
+app.post('/addUser', (req, res) => {
+	const {id} = req.body;
+	console.log('trying to create file for user: ', id);
+	createUserFile(id)
+})
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 //---------------------DATA ACCESS METHODS BELOW-----------------------------------------------------------
@@ -89,7 +95,11 @@ const overwriteData = (filename, object) => {
 	})
 }
 
-const insertUser = username => overwriteData(username, { answers: [] })
+const createUserFile = username => {
+	processObjectFromFile("questions", qObj => {
+		overwriteData(username, { answers: Array(qObj.data.length) })
+	})
+}
 
 const addQuestion = qObj => {
 	processObjectFromFile("questions", q => {
