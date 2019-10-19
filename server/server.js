@@ -24,7 +24,7 @@ app.post('/addQuestion', (req, res, next) => {
 	console.log("recieved question object: ", question);
 	processObjectFromFile("questions", q => {
 		q.data.push(question);
-		overwriteData("questions", question);
+		overwriteData("questions", question, next);
 	}, next)
 })
 
@@ -47,7 +47,7 @@ app.post('/addAnswer', (req, res, next) => {
 	console.log(`user ${id} would like to save answer: ${answer}`);
 	processObjectFromFile(id, user => {
 		user.answers.push(answer);
-		overwriteData(id, user);
+		overwriteData(id, user, next);
 	}, next)
 })
 
@@ -75,7 +75,9 @@ app.post('/addUser', (req, res) => {
 	const {id} = req.body;
 	console.log('trying to create file for user: ', id);
 	processObjectFromFile("questions", qObj => {
-		overwriteData(username, { answers: Array(qObj.data.length) })
+		overwriteData(username, { answers: Array(qObj.data.length) }, next, () => {
+			res.json({ status: "OK" })
+		})
 	}, next)
 })
 
@@ -99,9 +101,9 @@ const processObjectFromFile = (filename, handleData, errorHandler) => {
 	})
 }
 
-const overwriteData = (filename, object, errorHandler) => {
+const overwriteData = (filename, obj, errorHandler, success) => {
 	try {
-		const jsonString = JSON.stringify(jsonString)
+		const jsonString = JSON.stringify(obj)
 	} catch (error) {
 		errorHandler(error);
 	}
@@ -109,6 +111,7 @@ const overwriteData = (filename, object, errorHandler) => {
 		if (err) {
 			errorHandler(err)
 		} else {
+			success && success();
 			console.log('Successfully overwrote file')
 		}
 	})
