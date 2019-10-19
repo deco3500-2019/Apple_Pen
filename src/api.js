@@ -22,6 +22,6 @@ export default {
 	},
 
 	async postNewUser(userid) {
-		return axios.post('/addUser', {id: userid}).then(res => res.data)
+		return axios.post('/addUser', {id: userid}).then(res => res.data.status)
 	}
 }

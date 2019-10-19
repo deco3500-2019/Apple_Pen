@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
 
 export default ({setUser}) => {
 	const classes = useStyles();
-	let username;
+	let username = "";
 	return (
 		<div className= {classes.root} >
 			<Grid container alignContent="center">

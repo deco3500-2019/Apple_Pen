@@ -15,16 +15,21 @@ export default class extends Component{
 
 	showQuestion = q => this.setState({ question: q })
 
-	login = username => {
-		api.postNewUser(username).then( status =>{
-			
+	login = async username => {
+		api.postNewUser(username)
+		.then( status => {
+			if (status === "OK") this.setState({ userID: username })
+		})
+		.catch( err => {
+			// TODO
+			console.log(err);
 		})
 	}
 
 	render(){
 		const {userID, question} = this.state;
 		return (
-			!userID ? 
+			userID === null ? 
 				<Login setUser={this.login}/>
 				: !question ?  // If logged in and no question posed
 					<Idle reDirect= {this.showQuestion} id={userID} />
