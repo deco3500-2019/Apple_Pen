@@ -1,10 +1,11 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import AlarmIcon from "@material-ui/icons/Alarm";
 import api from "../../api";
+import Header from "./Header";
 
 let useStyles = makeStyles(theme =>({
 	root: {
@@ -66,18 +67,21 @@ export default class extends Component {
 		api.postAnswer(this.props.id, this.state.answer);
 		this.setState({ showResult: true });
 		setTimeout(() => {
-			this.props.reDirect()  // Give user chance to see if they answered wrong or correct, then switch page
+			this.props.showQuestion(false)  // Give user chance to see if they answered wrong or correct, then switch page
 		}, 10 * 1000)
 	}
 
 	render(){
 		return (
-			<ContainedButtons
-				{...this.props }
-				answer={this.state.answer}
-				showResult= {this.state.showResult}
-				setAnswer= { a => this.setState({answer: a})}
-			/>
+			<Fragment>
+				<Header/>
+				<ContainedButtons
+					{...this.props}
+					answer={this.state.answer}
+					showResult={this.state.showResult}
+					setAnswer={a => this.setState({ answer: a })}
+				/>
+			</Fragment>
 		)
 	}
 }

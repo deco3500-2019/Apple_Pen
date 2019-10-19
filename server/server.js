@@ -24,9 +24,10 @@ app.post('/getQuestion', (req, res) => {
 	processObjectFromFile(id, user => {  // First access users file. TODO: error handling
 		processObjectFromFile("questions", qObj => {  // Second access question file
 			if (qObj.data.length === user.answers.length) {  // No new question
+				console.log(`user ${id} did not retrieve new question`)
 				res.json({ success: false })
 			} else {
-				console.log(`user ${id} successfully accessed questions`)
+				console.log(`user ${id} will be sent new question`)
 				res.json({ success: true, question: qObj.data[qObj.data.length - 1] })
 			}
 		})
@@ -49,6 +50,7 @@ app.post('/getAnswers' , (req, res) => {
 			console.log(user)
 			answers.push(user.answers[user.answers.length - 1])
 		});
+		console.log("Teacher is being sent answers")
 		res.json(answers)
 	})
 })

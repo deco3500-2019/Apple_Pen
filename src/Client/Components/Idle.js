@@ -1,6 +1,7 @@
-import React, { Component} from "react";
+import React, { Component, Fragment} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import api from "../../api"
+import Header from "./Header";
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -45,7 +46,10 @@ export default class extends Component {
 
 	render() {
 		return (
-			<Display {...this.state} />
+			<Fragment>
+				<Header />
+				<Display {...this.state} />
+			</Fragment>
 		) 
 	}
 }

@@ -4,32 +4,23 @@ import { Login, AnswerQuestion, Idle, Header} from "./Components";
 export default class extends Component{
 
 	state = {
-		loggedIn: true,
 		question: false,
-		userID: "Scotty"
+		userID: null
 	}
 
-	showQuestion = q => {
-		console.log(q);
-		this.setState({ question: q })
-	}
+	showQuestion = q => this.setState({ question: q })
 
-	showIdle = () => {
-		this.setState({ question: false })
-	}
+	login = username => this.setState({ userID: username })
 
 	render(){
-		const {loggedIn, userID, question} = this.state;
+		const {userID, question} = this.state;
 		return (
-			<Fragment>
-				<Header />
-				{ !loggedIn ? 
-				<Login/>
+			!userID ? 
+				<Login setUser={this.login}/>
 				: !question ?  // If logged in and no question posed
-				<Idle reDirect= {this.showQuestion} id={userID} />
-				:  // If logged in and question posed
-				<AnswerQuestion question={question} reDirect= {this.showIdle} id={userID}/>}
-			</Fragment>
+					<Idle reDirect= {this.showQuestion} id={userID} />
+					:  // If logged in and question posed
+					<AnswerQuestion question={question} showQuestion= {this.showQuestion} id={userID}/>
 		)
 	}
 }
