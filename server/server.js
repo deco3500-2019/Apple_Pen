@@ -57,14 +57,19 @@ app.post('/getAnswers' , (req, res, next) => {
 
 app.post('/addUser', (req, res, next) => {
 	const {id: userFile, id} = req.body
-	console.log('trying to create file for user: ', id);
 	processObjectFromFile("questions", question => {
-		overwriteData(userFile, { answers: Array(question.data.length) }, next, () => {
-			res.json({ status: "OK" })  // Make sure client can proceed with login
+		processObjectFromFile(userFile, user => {
+			console.log(`gave user ${id} file from disc`)
+			res.json({ status: "OK" })
+		}, err => {
+			overwriteData(userFile, { answers: Array(question.data.length) }, next, () => {
+				res.json({ status: "OK" })  // Make sure client can proceed with login
+			})
 		})
 	}, next)
 })
 
+// TODO: What if multiple hosts and one of them close their tab?
 app.post('/deleteFiles', (req, res, next) => {
 	fs.readdir(__dirname, (err, filenames) => {
 		if (err) next(err)

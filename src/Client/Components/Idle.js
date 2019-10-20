@@ -18,10 +18,6 @@ const useStyles = makeStyles(theme => ({
 
 export default class extends Component {
 
-	state = {
-		connect: true
-	}
-
 	async componentDidMount() {
 		this.timerID = setInterval(
 			() => this.tick(),
@@ -32,15 +28,14 @@ export default class extends Component {
 	async tick(){
 		api.fetchQuestion(this.props.id).then( response => {
 			console.log(response);
-			if (!response.success){ 
-				if (!this.state.connect) this.setState({ connect: true })
-				return
-			}
+			if (!response.success) return
 			clearInterval(this.timerID);
-			this.props.reDirect(response.question)  // TODO: Handle undefined (answers > questions)
+			this.props.showQ(response.question)  // TODO: Handle undefined (answers > questions)
 		})
 		.catch( error => {
-			if (this.state.connect) this.setState({ connect: false })
+			clearInterval(this.timerID);
+			localStorage.clear()
+			this.props.logout()
 		})
 	}
 
@@ -58,11 +53,7 @@ const Display = ({ connect }) => {
 	const classes = useStyles();
 	return(
 		<div className={classes.root}>
-			<h1> {connect ?
-			"Loading..."
-			:
-			"Unable to connect to server"}
-			</h1>
+			<h1> Loading... </h1>
 		</div>
 	)
 }

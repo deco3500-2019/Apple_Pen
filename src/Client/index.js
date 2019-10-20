@@ -10,7 +10,8 @@ export default class extends Component{
 	}
 
 	componentDidMount(){
-		console.log("Client did mount")
+		const username = localStorage.getItem("username");
+		if (username) this.login(username);
 	}
 
 	componentWillUnmount(){
@@ -22,7 +23,10 @@ export default class extends Component{
 	login = async username => {
 		api.postNewUser(username)
 		.then( status => {
-			if (status === "OK") this.setState({ userID: username })
+			if (status === "OK"){
+				localStorage.setItem("username", username);
+				this.setState({ userID: username })
+			}
 		})
 		.catch( err => {
 			// TODO
@@ -30,13 +34,15 @@ export default class extends Component{
 		})
 	}
 
+	logout = () => this.setState({ userID: null })
+
 	render(){
 		const {userID, question} = this.state;
 		return (
 			userID === null ? 
 				<Login setUser={this.login}/>
 				: !question ?  // If logged in and no question posed
-					<Idle reDirect= {this.showQuestion} id={userID} />
+					<Idle showQ= {this.showQuestion} logout={this.logout} id={userID} />
 					:  // If logged in and question posed
 					<AnswerQuestion question={question} showQuestion= {this.showQuestion} id={userID}/>
 		)
