@@ -10,8 +10,9 @@ export default class extends Component {
 
 	componentDidMount(){
 		console.log("Host did mount")
-		window.onunload = () => api.deleteUserFiles()
+		window.onunload = () => api.endGame()
 	}
+
 
 	setTimer = time => {
 		this.timerID = setTimeout(() => {

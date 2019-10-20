@@ -65,13 +65,15 @@ app.post('/addUser', (req, res, next) => {
 	}, next)
 })
 
-app.post('/deleteUsers', (req, res, next) => {
-	processFilesInDir(__dirname, userFiles => {
-		userFiles.forEach( f => fs.unlink(getPath(f), err => {
-			if (err) return next(err);
-			console.log(`successfully deleted user ${f}'s file`)
-		}))
-	}, next)
+app.post('/deleteFiles', (req, res, next) => {
+	fs.readdir(__dirname, (err, filenames) => {
+		if (err) next(err)
+		filenames.filter(f => f !== "server.js").forEach( f => {
+			fs.unlink(path.resolve(__dirname, f), err => {
+				if (err) next(err)
+			})
+		})
+	})
 })
 
 // Error handler. Used by performing the callback "next(err)" middleware
@@ -112,7 +114,7 @@ const overwriteData = (filename, obj, errorHandler, success) => {
 	}
 }
 
-const processFilesInDir = (dirname, handleData, handleError) => {
+const processUserFilesInDir = (dirname, handleData, handleError) => {
 	fs.readdir(dirname, (err, filenames) => {
 		if (err) return handleError(err);
 		const trimmed = filenames.filter(f => f != "server.js" && f != "questions.json")
@@ -122,7 +124,7 @@ const processFilesInDir = (dirname, handleData, handleError) => {
 }
 
 const processObjectsFromDir = (dirname, handleObjects, handleError) =>{
-	processFilesInDir(dirname, filenames => {
+	processUserFilesInDir(dirname, filenames => {
 		const objects = filenames.reduce((acc, filename) => {
 			try {
 				const obj = JSON.parse(fs.readFileSync(getPath(filename)));

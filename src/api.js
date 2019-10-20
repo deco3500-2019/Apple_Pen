@@ -25,7 +25,7 @@ export default {
 		return axios.post('/addUser', {id: userid}).then(res => res.data.status)
 	},
 
-	async deleteUserFiles(){
-		axios.post('/deleteUsers')
+	async endGame(){
+		axios.post('/deleteFiles')
 	}
 }
