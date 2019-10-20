@@ -73,6 +73,18 @@ app.post('/deleteFiles', (req, res, next) => {
 				if (err) next(err)
 			})
 		})
+		console.log("deleted files on disc")
+	})
+})
+
+app.post('/addQuestionFile', (req, res, next) =>{
+	processObjectFromFile("questions", questions => {  // check if question file already exists
+		res.json({ status: "OK" })
+	}, err => {
+		overwriteData("questions", { data: [] }, next, () => {  // Otherwise write a new one
+			res.json({ status: "OK" });
+			console.log("Added new question file")
+		})
 	})
 })
 
@@ -91,7 +103,7 @@ const processObjectFromFile = (filename, handleData, errorHandler) => {
 		if (err) return errorHandler(err)
 		try {
 			const obj = JSON.parse(jsonString);
-			handleData(obj)
+			handleData && handleData(obj)
 		} catch (error) {
 			errorHandler(err)
 		}

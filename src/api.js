@@ -25,6 +25,10 @@ export default {
 		return axios.post('/addUser', {id: userid}).then(res => res.data.status)
 	},
 
+	initiateGame(){
+		return axios.post('/addQuestionFile').then(res => res.data.status)
+	},
+
 	async endGame(){
 		axios.post('/deleteFiles')
 	}

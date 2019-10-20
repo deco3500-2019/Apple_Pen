@@ -5,11 +5,25 @@ import api from "../api";
 export default class extends Component {
 
 	state = {
-		showChart: false
+		showChart: false,
+		connect: true
 	}
 
-	componentDidMount(){
-		console.log("Host did mount")
+	async componentDidMount(){
+		console.log("Host did mount");
+		const timedID = setInterval(() => {  // Start querying for connection
+			api.initiateGame()
+				.then(status => {
+					if (status === "OK"){  // Stop querying for connection
+						clearInterval(timedID);
+						this.setState({ connect: true })
+					}
+				})
+				.catch(err => {
+					if (this.state.connect) this.setState({ connect: false })
+					console.log(err)
+				})
+		}, 1000);
 		window.onunload = () => api.endGame()
 	}
 
@@ -23,14 +37,18 @@ export default class extends Component {
 	showQuestionForm = () => this.setState({showChart: false})
 
 	render(){
-		const { showChart } = this.state
+		const { showChart, connect } = this.state
 		return (
 		<Fragment>
 			<Header />
-			{showChart ?
-			<Chart reDirect= {this.showQuestionForm}/>
-			: 
-			<Stepper reDirectIn= {this.setTimer}/>}
+			{connect ? 
+				showChart ?
+					<Chart reDirect={this.showQuestionForm} />
+				:
+					<Stepper reDirectIn={this.setTimer} />
+			:
+				<h3>There was an error starting the quiz</h3>
+			}
 		</Fragment>
 		)
 	}
