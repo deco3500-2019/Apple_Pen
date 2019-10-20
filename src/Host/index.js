@@ -1,15 +1,16 @@
 import React, { Fragment, Component }from 'react';
-import { Route, useRouteMatch } from "react-router-dom";
 import { Stepper, Header, Chart } from "./Components";
+import api from "../api";
 
 export default class extends Component {
 
 	state = {
-		showChart: true
+		showChart: false
 	}
 
-	componentWillUnmount(){
-		// TODO: delete question file in backend
+	componentDidMount(){
+		console.log("Host did mount")
+		window.onunload = () => api.deleteUserFiles()
 	}
 
 	setTimer = time => {

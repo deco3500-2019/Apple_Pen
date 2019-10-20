@@ -9,6 +9,10 @@ export default class extends Component{
 		userID: null
 	}
 
+	componentDidMount(){
+		console.log("Client did mount")
+	}
+
 	componentWillUnmount(){
 		// TODO: delete user files in backend
 	}

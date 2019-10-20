@@ -113,25 +113,24 @@ const overwriteData = (filename, obj, errorHandler, success) => {
 }
 
 const processFilesInDir = (dirname, handleData, handleError) => {
-	fs.readdir(dirname, (err, files) => {
+	fs.readdir(dirname, (err, filenames) => {
 		if (err) return handleError(err);
-		handleData(files)
+		const trimmed = filenames.filter(f => f != "server.js" && f != "questions.json")
+			.map(f => f.slice(0, f.length - 5))
+		handleData(trimmed)
 	})
 }
 
 const processObjectsFromDir = (dirname, handleObjects, handleError) =>{
-	processFilesInDir(dirname, files => {
-		const objects = files.filter(f => f != "server.js" && f != "questions.json")
-			.map(f => f.slice(0, f.length - 5))
-			.reduce((acc, filename) => {
-				try {
-					const obj = JSON.parse(fs.readFileSync(getPath(filename)));
-					return acc.concat(obj)
-				} catch (error) {
-					handleError(error)
-				}
-			}, []);
+	processFilesInDir(dirname, filenames => {
+		const objects = filenames.reduce((acc, filename) => {
+			try {
+				const obj = JSON.parse(fs.readFileSync(getPath(filename)));
+				return acc.concat(obj)
+			} catch (error) {
+				handleError(error)
+			}
+		}, []);
 		handleObjects(objects)
 	}, handleError)
-
 }

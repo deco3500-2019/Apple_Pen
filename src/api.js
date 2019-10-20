@@ -23,5 +23,9 @@ export default {
 
 	async postNewUser(userid) {
 		return axios.post('/addUser', {id: userid}).then(res => res.data.status)
+	},
+
+	async deleteUserFiles(){
+		axios.post('/deleteUsers')
 	}
 }
