@@ -5,12 +5,11 @@ import api from "../api";
 export default class extends Component {
 
 	state = {
-		showChart: false,
+		showChart: true,
 		connect: true
 	}
 
 	async componentDidMount(){
-		console.log("Host did mount");
 		const timedID = setInterval(() => {  // Start querying for connection
 			api.initiateGame()
 				.then(status => {

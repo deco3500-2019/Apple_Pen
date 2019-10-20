@@ -48,8 +48,10 @@ app.post('/addAnswer', (req, res, next) => {
 
 app.post('/getAnswers' , (req, res, next) => {
 	processObjectsFromDir(__dirname, users => {
-		const answers = users.reduce( (acc, u) => 
-			acc.concat(u.answers[u.answers.length - 1])
+		const answers = users.reduce( (acc, u) => {
+			acc.push(u.answers);
+			return acc
+		}
 		, [] );
 		res.json({ answers: answers })
 	}, next)
@@ -93,6 +95,11 @@ app.post('/addQuestionFile', (req, res, next) =>{
 	})
 })
 
+app.post('/getAllQuestions', (req, res, next) => {
+	processObjectFromFile("questions", obj => {
+		res.json({ questions: obj.data })
+	}, next)
+})
 // Error handler. Used by performing the callback "next(err)" middleware
 app.use((err, req, res, next) => {
 	console.log(` request ${req.path} failed - there was en error accessing files on disc: `, err);

@@ -1,50 +1,92 @@
 import React, { Component, Fragment } from "react";
 import { Grid, makeStyles } from "@material-ui/core";
+import ReactApexChart from "react-apexcharts";
 import api from '../../api'
 
 const useStyles = makeStyles({
 	root: {
-		height: "100vh",
-		width: "100vw",
+		flexGrow: 1,
 		display: "flex",
-		justifyContent: "center",
-		alignItems: "center"
+		direction: "column"
+	},
+	item: {
+		margin: "20px 0px",
+		padding: "20px 0px"
 	}
 });
 
 export default class extends Component{
-	constructor(props){
-		super(props);
-		this.state = {
-			answers: null
-		};
+
+	state = {
+		questions: [],
+		answers: []
 	}
 
 	async componentDidMount() {
 		api.fetchAnswers()
-		.then(answers => {
-			console.log(answers);
-			this.setState({ answers: answers })
-		})
-		.catch(err => {
-			this.setState({ answers: "Could not retrieve answers"})
-		})
+			.then(answers => {
+				api.fetchQuestions()
+					.then( questions => {
+						console.log(answers, questions);
+						this.setState({ answers: answers, questions: questions })
+					})
+					.catch( err => {
+						//TODO
+					})
+			})
+			.catch(err => {
+				//TODO
+			})
 	}
 
 	render(){
+		const { answers, questions } = this.state
 		return(
-			<ChartView/>
+			<ChartView  answers={answers} questions={questions}/>
 		)
 	}
 }
 
-const ChartView = props => {
-	const { root } = useStyles();
+var colors = ['#008FFB', '#00E396', '#FEB019', '#FF4560', '#775DD0', '#546E7A', '#26a69a', '#D10CE8'];
+
+const options = {
+	colors: colors,
+	plotOptions: {
+		bar: {
+			columnWidth: '45%',
+			distributed: true
+		}
+	},
+	dataLabels: {
+		enabled: false,
+	},
+	xaxis: {
+		labels: {
+			style: {
+				colors: colors,
+				fontSize: '14px'
+			}
+		}
+	}
+}
+
+const ChartView = ({ answers, questions }) => {
+	const { root, item } = useStyles();
+
+	const series =[{data: questions.map( (q, i) =>
+		({
+			x: i,
+			y: answers.reduce( (acc, a) =>
+				acc + (a[i] === q.answer ? 1 : 0)
+				, 0)
+		})
+	)}]
 
 	return (
 		<div className={root}>
-			<Grid container>
-				<Grid item >
+			<Grid container direction="column" alignContent="center" spacing={6}>
+				<Grid item className={item}>
+					<ReactApexChart options={options} series={series} type="bar" height="500" width="500"/>
 				</Grid>
 			</Grid>
 		</div>

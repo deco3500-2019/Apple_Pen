@@ -18,7 +18,7 @@ export default {
 	},
 
 	fetchAnswers(){
-		return axios.post('/getAnswers').then(res => res.data)
+		return axios.post('/getAnswers').then(res => res.data.answers)
 	},
 
 	async postNewUser(userid) {
@@ -31,5 +31,9 @@ export default {
 
 	async endGame(){
 		axios.post('/deleteFiles')
+	},
+
+	fetchQuestions(){
+		return axios.post('/getAllQuestions').then( res => res.data.questions)
 	}
 }
