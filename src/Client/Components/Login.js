@@ -32,8 +32,8 @@ export default ({setUser}) => {
 	let username = "";
 	return (
 		<div className= {classes.root} >
-			<Grid container alignContent="center">
-				<Grid item container sm={12} justify="center">
+			<Grid container alignContent="center" direction="column" >
+				<Grid item container sm justify="center" alignContent="flex-end">
 					<FormControl className={classes.margin}>
 						<InputLabel htmlFor="input-with-icon-adornment">Enter Username</InputLabel>
 						<Input
@@ -47,7 +47,7 @@ export default ({setUser}) => {
 						/>
 					</FormControl>
 				</Grid>
-				<Grid item container justify="center" sm={12}>
+				<Grid item container justify="center" sm>
 					<Button
 						variant="filled"
 						className= {classes.button}

@@ -1,5 +1,16 @@
 import React, { Component, Fragment } from "react";
+import { Grid, makeStyles } from "@material-ui/core";
 import api from '../../api'
+
+const useStyles = makeStyles({
+	root: {
+		height: "100vh",
+		width: "100vw",
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center"
+	}
+});
 
 export default class extends Component{
 	constructor(props){
@@ -22,10 +33,20 @@ export default class extends Component{
 
 	render(){
 		return(
-			<Fragment>
-				<h3>{this.state.answers}</h3>
-				<button onClick = {() => this.props.reDirect()}> Back </button>
-			</Fragment>
+			<ChartView/>
 		)
 	}
+}
+
+const ChartView = props => {
+	const { root } = useStyles();
+
+	return (
+		<div className={root}>
+			<Grid container>
+				<Grid item >
+				</Grid>
+			</Grid>
+		</div>
+	)
 }

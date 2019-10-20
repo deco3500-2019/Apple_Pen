@@ -103,7 +103,7 @@ const ContainedButtons = props => {
 				</IconButton>
 			</div>
 			<div className={classes.content}>
-				{props.question.text}
+				{text}
 			</div> {[0, 1, 2, 3].map(key => 
 				<Button
 					variant="contained"

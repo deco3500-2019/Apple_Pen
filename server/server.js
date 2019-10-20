@@ -24,7 +24,7 @@ app.post('/addQuestion', (req, res, next) => {
 })
 
 app.post('/getQuestion', (req, res, next) => {
-	const userFile = req.body.id
+	const { id: userFile } = req.body;
 	processObjectFromFile(userFile, user => {  // First access user file
 		processObjectFromFile("questions", qObj => {  // Second access question file
 			if (qObj.data.length === user.answers.length) {  // No new question
@@ -38,12 +38,11 @@ app.post('/getQuestion', (req, res, next) => {
 });
 
 app.post('/addAnswer', (req, res, next) => {
-	const userFile = req.body.id;
-	const { id, answer } = req.body;
+	const { id, id: userFile, answer } = req.body;
 	console.log(`user ${id} would like to save answer: ${answer}`);
 	processObjectFromFile(userFile, user => {
 		user.answers.push(answer);
-		overwriteData(id, user, next);
+		overwriteData(userFile, user, next);
 	}, next)
 })
 
@@ -57,12 +56,21 @@ app.post('/getAnswers' , (req, res, next) => {
 })
 
 app.post('/addUser', (req, res, next) => {
-	const {userFile} = req.body.id;
+	const {id: userFile, id} = req.body
 	console.log('trying to create file for user: ', id);
 	processObjectFromFile("questions", question => {
 		overwriteData(userFile, { answers: Array(question.data.length) }, next, () => {
 			res.json({ status: "OK" })  // Make sure client can proceed with login
 		})
+	}, next)
+})
+
+app.post('/deleteUsers', (req, res, next) => {
+	processFilesInDir(__dirname, userFiles => {
+		userFiles.forEach( f => fs.unlink(getPath(f), err => {
+			if (err) return next(err);
+			console.log(`successfully deleted user ${f}'s file`)
+		}))
 	}, next)
 })
 
@@ -104,19 +112,26 @@ const overwriteData = (filename, obj, errorHandler, success) => {
 	}
 }
 
-const processObjectsFromDir = (dirname, handleData, handleError) => {
+const processFilesInDir = (dirname, handleData, handleError) => {
 	fs.readdir(dirname, (err, files) => {
 		if (err) return handleError(err);
+		handleData(files)
+	})
+}
+
+const processObjectsFromDir = (dirname, handleObjects, handleError) =>{
+	processFilesInDir(dirname, files => {
 		const objects = files.filter(f => f != "server.js" && f != "questions.json")
 			.map(f => f.slice(0, f.length - 5))
-			.reduce( (acc, filename) => {
+			.reduce((acc, filename) => {
 				try {
 					const obj = JSON.parse(fs.readFileSync(getPath(filename)));
 					return acc.concat(obj)
 				} catch (error) {
 					handleError(error)
 				}
-			}, [] );
-		handleData(objects)
-	})
+			}, []);
+		handleObjects(objects)
+	}, handleError)
+
 }

@@ -5,7 +5,7 @@ import { Stepper, Header, Chart } from "./Components";
 export default class extends Component {
 
 	state = {
-		showChart: false
+		showChart: true
 	}
 
 	componentWillUnmount(){
