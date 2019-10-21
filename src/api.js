@@ -17,10 +17,6 @@ export default {
 		return axios.post('/addAnswer', { id: userid, answer: answer})
 	},
 
-	fetchAnswers(){
-		return axios.post('/getAnswers').then(res => res.data.answers)
-	},
-
 	async postNewUser(userid) {
 		return axios.post('/addUser', {id: userid}).then(res => res.data.status)
 	},
@@ -33,7 +29,8 @@ export default {
 		axios.post('/deleteFiles')
 	},
 
-	fetchQuestions(){
-		return axios.post('/getAllQuestions').then( res => res.data.questions)
+	fetchTeachersResults(){
+		return axios.post('/getQuestionResults').then(res => res.data.data)
 	}
+
 }

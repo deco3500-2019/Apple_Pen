@@ -1,6 +1,7 @@
 import React, { Fragment, Component }from 'react';
 import { Stepper, Header, Chart } from "./Components";
 import api from "../api";
+import { stat } from 'fs';
 
 export default class extends Component {
 
@@ -33,7 +34,7 @@ export default class extends Component {
 		}, (time + 5) * 1000);
 	}
 
-	showQuestionForm = () => this.setState({showChart: false})
+	toggleView = () => this.setState(state => ({connect: state.connect, showChart: !state.showChart}))
 
 	render(){
 		const { showChart, connect } = this.state
@@ -42,7 +43,7 @@ export default class extends Component {
 			<Header />
 			{connect ? 
 				showChart ?
-					<Chart reDirect={this.showQuestionForm} />
+					<Chart callBack={this.toggleView} />
 				:
 					<Stepper reDirectIn={this.setTimer} />
 			:

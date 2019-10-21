@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from "react";
-import { Grid, makeStyles } from "@material-ui/core";
+import { Grid, makeStyles, Button } from "@material-ui/core";
 import ReactApexChart from "react-apexcharts";
 import api from '../../api'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
 	root: {
 		flexGrow: 1,
 		display: "flex",
@@ -12,37 +12,35 @@ const useStyles = makeStyles({
 	item: {
 		margin: "20px 0px",
 		padding: "20px 0px"
+	},
+	button: {
+		width: "100px",
+		background: theme.palette.primary
 	}
-});
+}));
 
 export default class extends Component{
 
 	state = {
-		questions: [],
-		answers: []
+		result: []
 	}
 
 	async componentDidMount() {
-		api.fetchAnswers()
-			.then(answers => {
-				api.fetchQuestions()
-					.then( questions => {
-						console.log(answers, questions);
-						this.setState({ answers: answers, questions: questions })
-					})
-					.catch( err => {
-						//TODO
-					})
-			})
-			.catch(err => {
-				//TODO
-			})
+		api.fetchTeachersResults().then( data => {
+			console.log( data );
+			this.setState({result: data})
+		})
+		.catch( err => {
+			//TODO
+		})
 	}
 
 	render(){
-		const { answers, questions } = this.state
 		return(
-			<ChartView  answers={answers} questions={questions}/>
+			<ChartView
+				reDirect={this.props.callBack}
+				data= {this.state.result}
+			/>
 		)
 	}
 }
@@ -50,6 +48,11 @@ export default class extends Component{
 var colors = ['#008FFB', '#00E396', '#FEB019', '#FF4560', '#775DD0', '#546E7A', '#26a69a', '#D10CE8'];
 
 const options = {
+	chart: {
+		toolbar: {
+			show: false
+		}
+	},
 	colors: colors,
 	plotOptions: {
 		bar: {
@@ -70,23 +73,21 @@ const options = {
 	}
 }
 
-const ChartView = ({ answers, questions }) => {
-	const { root, item } = useStyles();
+const ChartView = ({ data, reDirect }) => {
+	const { root, item, button } = useStyles();
 
-	const series =[{data: questions.map( (q, i) =>
-		({
-			x: i,
-			y: answers.reduce( (acc, a) =>
-				acc + (a[i] === q.answer ? 1 : 0)
-				, 0)
-		})
-	)}]
+	const series =[{data: data}]
 
 	return (
 		<div className={root}>
 			<Grid container direction="column" alignContent="center" spacing={6}>
 				<Grid item className={item}>
 					<ReactApexChart options={options} series={series} type="bar" height="500" width="500"/>
+				</Grid>
+				<Grid item >
+					<Button variant="contained" color="primary" className={button} onClick= {reDirect}>
+						Back
+					</Button>
 				</Grid>
 			</Grid>
 		</div>
