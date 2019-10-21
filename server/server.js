@@ -106,6 +106,18 @@ app.post('/getQuestionResults', (req, res, next) => {
 	}, next)
 })
 
+app.post('/getStudentScore', (req, res, next) => {
+	const {id: userFile} = req.body;
+	processObjectFromFile(userFile, user => {
+		processObjectFromFile('questions', questions => {
+			const score = questions
+				.map( (q, i) => q.answer === user.answers[i])  // Answer correct?
+				.reduce( (acc, correct) => acc + (correct ? 100 : 0), 0)  // Calculate points
+			res.json({ score: score })
+		}, next)
+	}, next)
+})
+
 // Error handler. Used by performing the callback "next(err)" middleware
 app.use((err, req, res, next) => {
 	console.log(` request ${req.path} failed - there was en error accessing files on disc: `, err);

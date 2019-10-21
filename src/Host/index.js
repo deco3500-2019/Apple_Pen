@@ -6,7 +6,7 @@ import { stat } from 'fs';
 export default class extends Component {
 
 	state = {
-		showChart: true,
+		showChart: false,
 		connect: true
 	}
 

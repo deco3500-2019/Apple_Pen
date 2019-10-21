@@ -35,7 +35,7 @@ export default class extends Component {
 		.catch( error => {
 			clearInterval(this.timerID);
 			localStorage.clear()
-			this.props.logout()
+			this.props.showScores()
 		})
 	}
 

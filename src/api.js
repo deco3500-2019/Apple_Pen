@@ -31,6 +31,10 @@ export default {
 
 	fetchTeachersResults(){
 		return axios.post('/getQuestionResults').then(res => res.data.data)
+	},
+
+	async fetchStudentScore(username){
+		return axios.post('/getStudentScore', { id: username }).then(res => res.data.score)
 	}
 
 }

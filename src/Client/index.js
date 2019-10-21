@@ -1,13 +1,16 @@
 import React, { Component, Fragment } from 'react';
-import { Login, AnswerQuestion, Idle, Header} from "./Components";
+import { Login, AnswerQuestion, Idle, GameOver} from "./Components";
 import api from "../api";
 
 export default class extends Component{
 
 	state = {
 		question: false,
-		userID: null
+		userID: null,
+		gameOver: false,
 	}
+
+	score = 0;
 
 	componentDidMount(){
 		const username = localStorage.getItem("username");
@@ -34,17 +37,26 @@ export default class extends Component{
 		})
 	}
 
-	logout = () => this.setState({ userID: null })
+	gameOver = () => this.setState({ gameOver: true })
+
+	setScore = score => this.score += score
 
 	render(){
-		const {userID, question} = this.state;
+		const {userID, question, gameOver} = this.state;
 		return (
-			userID === null ? 
-				<Login setUser={this.login}/>
+			userID === null ?
+				<Login setUser={this.login} />
 				: !question ?  // If logged in and no question posed
-					<Idle showQ= {this.showQuestion} logout={this.logout} id={userID} />
-					:  // If logged in and question posed
-					<AnswerQuestion question={question} showQuestion= {this.showQuestion} id={userID}/>
+					gameOver ?  // Is the game over?
+						<GameOver logout={this.logout} score={this.score}/>
+					:  // If not then keep fetching for questions
+						<Idle showQ={this.showQuestion} showScores={this.gameOver} id={userID} />
+				:  // If logged in and question posed
+					<AnswerQuestion
+						question={question}
+						showQuestion={this.showQuestion}
+						setScore={this.setScore}
+						id={userID} />
 		)
 	}
 }
