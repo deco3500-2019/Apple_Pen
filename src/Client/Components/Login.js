@@ -6,6 +6,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import TextField from "@material-ui/core/TextField";
 import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
@@ -16,15 +17,16 @@ const useStyles = makeStyles(theme => ({
 		background: "#E1CCBD",
 		color: "black",
 	},
-	margin: {
-		margin: theme.spacing(1),
-	},
 	button: {
 		marginTop: "10px",
 		background: "#95C2B7",
 		width: "170px",
 		height: "40px"
 	},
+	textField: {
+		background: "#F2F2F2",
+		border: "1px solid #BBBBBB",
+	}
 }));
 
 export default ({setUser}) => {
@@ -34,18 +36,17 @@ export default ({setUser}) => {
 		<div className= {classes.root} >
 			<Grid container alignContent="center" direction="column" >
 				<Grid item container sm justify="center" alignContent="flex-end">
-					<FormControl className={classes.margin}>
-						<InputLabel htmlFor="input-with-icon-adornment">Enter Username</InputLabel>
-						<Input
-							id="input-with-icon-adornment"
-							startAdornment={
-								<InputAdornment position="start">
-									<AccountCircle />
-								</InputAdornment>
-							}
-							onChange= {e => username= e.target.value}
-						/>
-					</FormControl>
+					<TextField
+						onChange={e => username = e.target.value}
+						id="filled-username-input"
+						label="Enter Username"
+						className={classes.textField}
+						type="username"
+						name="username"
+						autoComplete="username"
+						margin="normal"
+						variant="filled"
+					/>
 				</Grid>
 				<Grid item container justify="center" sm>
 					<Button
@@ -53,10 +54,11 @@ export default ({setUser}) => {
 						className= {classes.button}
 						onClick= {() => setUser(username)}
 					>
-						Login
+						Join
 					</Button>
 				</Grid>
 			</Grid>
 		</div>
 	)
 }
+
