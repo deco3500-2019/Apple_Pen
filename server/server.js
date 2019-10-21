@@ -17,6 +17,7 @@ app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, '../build')));
 
 app.get('/*', function (req, res) {
+	console.log("Browser requested index.html");
 	res.sendFile(path.join(__dirname, '../build', 'index.html'));
 });
 
