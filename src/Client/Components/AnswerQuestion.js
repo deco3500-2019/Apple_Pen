@@ -65,7 +65,7 @@ export default class extends Component {
 
 	timeOut(){
 		api.postAnswer(this.props.id, this.state.answer);
-		this.props.setScore(this.state.answer === this.props.question.answers ? 100 : 0)
+		this.props.setScore(this.state.answer === this.props.question.answer ? 100 : 0)
 		this.setState({ showResult: true });
 		setTimeout(() => {
 			this.props.showQuestion(false)  // Give user chance to see if they answered wrong or correct, then switch page

@@ -66,22 +66,15 @@ const options = {
 	}
 }
 
-export default ({ score }) => {
+export default ({ score, qCount }) => {
 	const classes = useStyles();
-	const series = [{ data: [
-		{
-			x: "Interaction Design",
-			y: 5
-		},
-		{
-			x: "Computer Sc.",
-			y: 3
-		},
-		{
-			x: "Software Eng.",
-			y: 5
-		}
-	]}]
+	console.log(qCount);
+	const series = [{ data:
+		["Interaction Design", "Computer Sc.", "Software Eng."].map( major => ({
+			x: major,
+			y: Math.random() * qCount * 100
+		}))
+	}]
 
 
 	return (

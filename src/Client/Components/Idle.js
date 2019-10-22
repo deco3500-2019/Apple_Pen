@@ -53,7 +53,7 @@ const Display = ({ connect }) => {
 	const classes = useStyles();
 	return(
 		<div className={classes.root}>
-			<h1> Loading... </h1>
+			<h1> Pay attention to class, silly! </h1>
 		</div>
 	)
 }

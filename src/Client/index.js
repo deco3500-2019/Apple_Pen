@@ -11,6 +11,7 @@ export default class extends Component{
 	}
 
 	score = 0;
+	qCount = 0;
 
 	componentDidMount(){
 		const username = localStorage.getItem("username");
@@ -39,7 +40,10 @@ export default class extends Component{
 
 	gameOver = () => this.setState({ gameOver: true })
 
-	setScore = score => this.score += score
+	setScore = score => {
+		this.score += score
+		this.qCount += 1
+	}
 
 	render(){
 		const {userID, question, gameOver} = this.state;
@@ -48,7 +52,7 @@ export default class extends Component{
 				<Login setUser={this.login} />
 				: !question ?  // If logged in and no question posed
 					gameOver ?  // Is the game over?
-						<GameOver logout={this.logout} score={this.score}/>
+						<GameOver logout={this.logout} score={this.score} qCount={this.qCount}/>
 					:  // If not then keep fetching for questions
 						<Idle showQ={this.showQuestion} showScores={this.gameOver} id={userID} />
 				:  // If logged in and question posed
