@@ -89,7 +89,7 @@ export default class extends Component {
 
 const ContainedButtons = props => {
 	const classes = useStyles();
-	const { text, alternatives, answer } = props.question
+	const { text, alternatives, answer, timeLimit } = props.question
 
 	return (
 		<div className={classes.root}>
@@ -102,6 +102,7 @@ const ContainedButtons = props => {
 				>
 					<AlarmIcon />
 				</IconButton>
+				<Timer time={timeLimit} />
 			</div>
 			<div className={classes.content}>
 				{text}
@@ -123,4 +124,29 @@ const ContainedButtons = props => {
 				</Button>) }
 		</div>
 	);
+}
+
+class Timer extends Component{
+	constructor(props){
+		super(props);
+		this.state = {
+			time: props.time
+		}
+	}
+
+	componentDidMount(){
+		this.timerID = setInterval(() => {
+			this.setState(state => ({ time: state.time - 1 }))
+			if (this.state.time === 0) {
+				clearInterval(this.timerID);
+				this.setState({ time: "Time is up!"})
+			}
+		}, 1000);
+	}
+
+	render(){
+		return(
+			<p>{this.state.time}</p>
+		)
+	}
 }

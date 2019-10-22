@@ -21,7 +21,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const question = {
+const steps = ['Set Question & Answers', 'Set Right Answer', 'Set Answer Time'];
+
+let question = {
 	text: "",
 	alternatives: ["", "", "", ""],
 	timeLimit: 10,
@@ -33,14 +35,15 @@ const callBacks = [
 		text => question.text = text,
 		(alt, text) => question.alternatives[alt] = text
 	],
-	answer => question.answer = answer,
+	answer => {
+		console.log(question)
+		question.answer = answer
+		console.log(question)
+	},
 	time => {
-		console.log(time);
 		question.timeLimit = time
 	}
 ];
-
-const steps = ['Set Question & Answers', 'Set Right Answer', 'Set Answer Time'];
 
 const Content = props => {
 	const {step, callBack } = props;
@@ -56,15 +59,22 @@ const Content = props => {
 	}
 }
 
-export default props => {
-
+export default props => { 
 	const classes = useStyles();
 	const [activeStep, setActiveStep] = React.useState(0);
+
 	const callBack = callBacks[activeStep];
 
 	const handleNext = () => {
 		if (activeStep === steps.length - 1){
+			console.log(question);
 			api.postQuestion(question);
+			question = {
+				text: "",
+				alternatives: ["", "", "", ""],
+				timeLimit: 10,
+				answer: 0
+			};
 			props.reDirectIn(question.timeLimit)
 		}
 		setActiveStep(prevActiveStep => prevActiveStep + 1);

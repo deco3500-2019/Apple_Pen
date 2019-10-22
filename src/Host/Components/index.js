@@ -4,7 +4,8 @@ import RightAnswer from "./RightAnswer";
 import SetQuestion from "./SetQuestion";
 import Stepper from "./Stepper";
 import Chart from "./Chart";
+import Participants from "./Participants";
 
 export {
-	AnswerTime, Header, RightAnswer, SetQuestion, Stepper, Chart
+	AnswerTime, Header, RightAnswer, SetQuestion, Stepper, Chart, Participants
 }

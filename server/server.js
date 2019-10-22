@@ -125,6 +125,12 @@ app.post('/getStudentScore', (req, res, next) => {
 	}, next)
 })
 
+app.post('/getUserCount', (req, res, next) => {
+	processUserFilesInDir(__dirname, users => {
+		res.json({ count: users.length })
+	}, next)
+})
+
 // Error handler. Used by performing the callback "next(err)" middleware
 app.use((err, req, res, next) => {
 	console.log(` request ${req.path} failed - there was en error accessing files on disc: `, err);

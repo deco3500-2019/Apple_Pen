@@ -35,6 +35,10 @@ export default {
 
 	async fetchStudentScore(username){
 		return axios.post('/getStudentScore', { id: username }).then(res => res.data.score)
+	},
+
+	async fetchUserCount(){
+		return axios.post('/getUserCount').then( res => res.data.count )
 	}
 
 }

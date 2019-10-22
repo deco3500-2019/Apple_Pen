@@ -1,5 +1,5 @@
 import React, { Fragment, Component }from 'react';
-import { Stepper, Header, Chart } from "./Components";
+import { Stepper, Header, Chart, Participants } from "./Components";
 import api from "../api";
 import { stat } from 'fs';
 
@@ -41,6 +41,7 @@ export default class extends Component {
 		return (
 		<Fragment>
 			<Header />
+			<Participants/>
 			{connect ? 
 				showChart ?
 					<Chart callBack={this.toggleView} />
