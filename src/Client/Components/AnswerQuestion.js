@@ -17,7 +17,7 @@ let useStyles = makeStyles(theme =>({
 		margin: "40px 0 0 48px",
 		background: "#95C2B7",
 		width: "134px",
-		height: "76px"
+		height: "76px",
 	},
 	buttonSelected: {
 		backgroundColor: theme.palette.grey.A100,

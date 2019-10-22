@@ -72,7 +72,7 @@ export default ({ score, qCount }) => {
 	const series = [{ data:
 		["Interaction Design", "Computer Sc.", "Software Eng."].map( major => ({
 			x: major,
-			y: Math.random() * qCount * 100
+			y: Math.round(Math.random() * qCount * 100)
 		}))
 	}]
 
