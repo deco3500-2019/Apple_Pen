@@ -1,8 +1,5 @@
 import React, { Component, Fragment } from "react";
-import clsx from "clsx";
-import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
+import {Button, Paper, makeStyles, IconButton,  } from "@material-ui/core";
 import AlarmIcon from "@material-ui/icons/Alarm";
 import api from "../../api";
 import Header from "./Header";
@@ -13,11 +10,19 @@ let useStyles = makeStyles(theme =>({
 		height: "736px",
 		background: "#E1CCBD"
 	},
+	buttonContainer:{
+		marginTop: "10%",
+		width: "100%",
+		height: "30%",
+		display: "flex",
+		flexFlow: "row wrap",
+		justifyContent: "space-evenly",
+		alignContent: "space-between"
+	},
 	button: {
-		margin: "40px 0 0 48px",
 		background: "#95C2B7",
-		width: "134px",
-		height: "76px",
+		width: "35%",
+		height: "40%",
 	},
 	buttonSelected: {
 		backgroundColor: theme.palette.grey.A100,
@@ -106,22 +111,24 @@ const ContainedButtons = props => {
 			</div>
 			<div className={classes.content}>
 				{text}
-			</div> {[0, 1, 2, 3].map(key => 
-				<Button
-					variant="contained"
-					className = { clsx(classes.button,
-						!props.showResult ? 
-							{ [classes.buttonSelected]: props.answer === key }
-							:
-							key === props.answer && props.answer !== answer ?
-								{ [classes.buttonWrong]: true }
+			</div> 
+			<div className={classes.buttonContainer}>
+				{[0, 1, 2, 3].map(key =>
+					<Paper
+						className={`${classes.button} 
+						${!props.showResult ?
+								props.answer === key ? classes.buttonSelected : ""
 								:
-								{ [classes.buttonCorrect]: answer === key }
-					)}
-					onClick= { () => props.setAnswer(key)}
-				>
-				{alternatives[key]}
-				</Button>) }
+								key === props.answer && props.answer !== answer ?
+									classes.buttonWrong
+									:
+									answer === key ? classes.buttonCorrect : ""
+							}`}
+						onClick={() => props.setAnswer(key)}
+					>
+						{alternatives[key]}
+					</Paper>)}
+			</div>
 		</div>
 	);
 }
