@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from "react";
-import {Button, Paper, makeStyles, IconButton,  } from "@material-ui/core";
+import React, { Component } from "react";
+import { Paper, makeStyles, IconButton, Typography  } from "@material-ui/core";
 import AlarmIcon from "@material-ui/icons/Alarm";
 import api from "../../api";
 
@@ -21,6 +21,9 @@ let useStyles = makeStyles(theme =>({
 		background: "#95C2B7",
 		width: "35%",
 		height: "40%",
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center"
 	},
 	buttonSelected: {
 		backgroundColor: theme.palette.grey.A100,
@@ -119,7 +122,9 @@ const ContainedButtons = props => {
 							}`}
 						onClick={() => props.setAnswer(key)}
 					>
-						{alternatives[key]}
+						<Typography>
+							{alternatives[key]}
+						</Typography>
 					</Paper>)}
 			</div>
 		</div>
