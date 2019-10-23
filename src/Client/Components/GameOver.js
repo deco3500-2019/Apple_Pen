@@ -7,10 +7,9 @@ import { Header } from '../Components';
 const useStyles = makeStyles(theme => ({
 	root: {
 		display: "flex",
-		width: "414px",
-		height: "788px",
-		background: "#E1CCBD",
-		color: "black",
+		width: "100%",
+		height: "100%",
+		color: "black"
 	},
 	content: {
 		fontFamily: "Impact",
@@ -81,9 +80,6 @@ export default ({ score, qCount }) => {
 		<div className={classes.root} >
 			<Grid container alignContent="center" direction="column" >
 				<Grid item container sm justify="center">
-					<Header/>
-				</Grid>
-				<Grid item container sm justify="center">
 					<div className={classes.title}>
 						<p>Your Score Is: </p>
 						<div className={classes.score}>
@@ -100,7 +96,7 @@ export default ({ score, qCount }) => {
 						series={series}
 						type="bar"
 						height="400"
-						width="400" />
+						width="320" />
 				</Grid>
 			</Grid>
 		</div>

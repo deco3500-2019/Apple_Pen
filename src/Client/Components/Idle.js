@@ -5,9 +5,8 @@ import Header from "./Header";
 
 const useStyles = makeStyles(theme => ({
 	root: {
-		width: "414px",
-		height: "736px",
-		background: "#E1CCBD",
+		width: "100%",
+		height: "100%",
 		color: "black",
 		display: "flex",
 		textalign: "center",
@@ -40,12 +39,7 @@ export default class extends Component {
 	}
 
 	render() {
-		return (
-			<Fragment>
-				<Header />
-				<Display {...this.state} />
-			</Fragment>
-		) 
+		return <Display {...this.state} />
 	}
 }
 
@@ -53,7 +47,7 @@ const Display = ({ connect }) => {
 	const classes = useStyles();
 	return(
 		<div className={classes.root}>
-			<h1> Pay attention to class, silly! </h1>
+			<h2> Pay attention to class, silly! </h2>
 		</div>
 	)
 }

@@ -2,13 +2,11 @@ import React, { Component, Fragment } from "react";
 import {Button, Paper, makeStyles, IconButton,  } from "@material-ui/core";
 import AlarmIcon from "@material-ui/icons/Alarm";
 import api from "../../api";
-import Header from "./Header";
 
 let useStyles = makeStyles(theme =>({
 	root: {
-		width: "414px",
-		height: "736px",
-		background: "#E1CCBD"
+		width: "100%",
+		height: "100%"
 	},
 	buttonContainer:{
 		marginTop: "10%",
@@ -78,17 +76,12 @@ export default class extends Component {
 	}
 
 	render(){
-		return (
-			<Fragment>
-				<Header/>
-				<ContainedButtons
-					{...this.props}
-					answer={this.state.answer}
-					showResult={this.state.showResult}
-					setAnswer={a => this.setState({ answer: a })}
-				/>
-			</Fragment>
-		)
+		return <ContainedButtons
+				{...this.props}
+				answer={this.state.answer}
+				showResult={this.state.showResult}
+				setAnswer={a => this.setState({ answer: a })}
+			/>
 	}
 }
 

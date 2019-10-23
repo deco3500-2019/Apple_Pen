@@ -12,13 +12,15 @@ import { Button } from '@material-ui/core';
 const useStyles = makeStyles(theme => ({
 	root: {
 		display: "flex",
-		width: "414px",
-		height: "788px",
-		background: "#E1CCBD",
+		width: "100%",
+		height: "100%",
 		color: "black",
+		flexDirection: "column",
+		justifyContent: "center",
+		alignItems: "center"
 	},
 	button: {
-		marginTop: "10px",
+		margin: "10px 0px 30px 0px",
 		background: "#95C2B7",
 		width: "170px",
 		height: "40px"
@@ -34,30 +36,24 @@ export default ({setUser}) => {
 	let username = "";
 	return (
 		<div className= {classes.root} >
-			<Grid container alignContent="center" direction="column" >
-				<Grid item container sm justify="center" alignContent="flex-end">
-					<TextField
-						onChange={e => username = e.target.value}
-						id="filled-username-input"
-						label="Enter Username"
-						className={classes.textField}
-						type="username"
-						name="username"
-						autoComplete="username"
-						margin="normal"
-						variant="filled"
-					/>
-				</Grid>
-				<Grid item container justify="center" sm>
-					<Button
-						variant="filled"
-						className= {classes.button}
-						onClick= {() => setUser(username)}
-					>
-						Join
-					</Button>
-				</Grid>
-			</Grid>
+			<TextField
+				onChange={e => username = e.target.value}
+				id="filled-username-input"
+				label="Enter Username"
+				className={classes.textField}
+				type="username"
+				name="username"
+				autoComplete="username"
+				margin="normal"
+				variant="filled"
+			/>
+			<Button
+				variant="filled"
+				className= {classes.button}
+				onClick= {() => setUser(username)}
+			>
+			Join
+			</Button>
 		</div>
 	)
 }
