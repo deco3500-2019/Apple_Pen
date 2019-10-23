@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path')
 
 const app = express()
-const port = 80
+const port = 443
 
 const getPath = filename => path.resolve(__dirname, `${filename}.json`)
 
@@ -113,6 +113,7 @@ app.post('/getQuestionResults', (req, res, next) => {
 	}, next)
 })
 
+// Not used atm
 app.post('/getStudentScore', (req, res, next) => {
 	const {id: userFile} = req.body;
 	processObjectFromFile(userFile, user => {
@@ -137,7 +138,7 @@ app.use((err, req, res, next) => {
 	res.status(500).json({ error: err })
 })
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => console.log(`Web app listening on port ${port}.`))
 
 //---------------------DATA ACCESS METHODS BELOW-----------------------------------------------------------
 
