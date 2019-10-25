@@ -1,41 +1,13 @@
-# Apple_Pen
-[Proposal doc](https://github.com/deco3500-2019/Apple_Pen/wiki/Concept-Proposal)
+# Welcome to Apple_Pen's reposetory!
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+For a detailed explanations on what this project is and how it came to be, check out the following wiki pages:
 
-## Available Scripts
+- [Proposal doc](https://github.com/deco3500-2019/Apple_Pen/wiki/Concept-Proposal): A document that describes our problem domain and how we intend to adreess it with a potential design solution. It reflects the state of the project and our ideas at the very beginning of this adventure.
 
-In the project directory, you can run:
+- [Conference Poster](https://github.com/deco3500-2019/Apple_Pen/wiki/Conference-Poster): A promotional artefact that summarizes our problem domain, concept and process in the form as a cute poster.
 
-### `npm start`
+-[Final Prototype](https://github.com/deco3500-2019/Apple_Pen/wiki/Final-Prototype): The resulting prototype of our 6 week design process. includes final results on design and functionality as well as instructions on how to deploy it and use it.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- [Process Overview](https://github.com/deco3500-2019/Apple_Pen/wiki/Design-Process-Overview): A document that step-by-step details the design process practiced. Explains how the prototype came to be.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- [Contributors](https://github.com/deco3500-2019/Apple_Pen/wiki/Design-Process-Overview): List of team members and their contributions to the project. 
