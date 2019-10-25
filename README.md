@@ -6,7 +6,7 @@ For a detailed explanations on what this project is and how it came to be, check
 
 - [Conference Poster](https://github.com/deco3500-2019/Apple_Pen/wiki/Conference-Poster): A promotional artefact that summarizes our problem domain, concept and process in the form as a cute poster.
 
--[Final Prototype](https://github.com/deco3500-2019/Apple_Pen/wiki/Final-Prototype): The resulting prototype of our 6 week design process. includes final results on design and functionality as well as instructions on how to deploy it and use it.
+- [Final Prototype](https://github.com/deco3500-2019/Apple_Pen/wiki/Final-Prototype): The resulting prototype of our 6 week design process. includes final results on design and functionality as well as instructions on how to deploy it and use it.
 
 - [Process Overview](https://github.com/deco3500-2019/Apple_Pen/wiki/Design-Process-Overview): A document that step-by-step details the design process practiced. Explains how the prototype came to be.
 
