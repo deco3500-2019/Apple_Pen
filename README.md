@@ -10,4 +10,4 @@ For a detailed explanations on what this project is and how it came to be, check
 
 - [Process Overview](https://github.com/deco3500-2019/Apple_Pen/wiki/Design-Process-Overview): A document that step-by-step details the design process practiced. Explains how the prototype came to be.
 
-- [Contributors](https://github.com/deco3500-2019/Apple_Pen/wiki/Design-Process-Overview): List of team members and their contributions to the project. 
+- [Contributors](https://github.com/deco3500-2019/Apple_Pen/wiki/Contributors): List of team members and their contributions to the project. 
